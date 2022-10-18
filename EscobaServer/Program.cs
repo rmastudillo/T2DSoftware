@@ -27,14 +27,14 @@ using Socket listener = new(
 
 listener.Bind(ipEndPoint);
 listener.Listen(100);
-var sockets = new List<Socket>();
-
+var sockets = new List<Socket>(); 
+var handler = await listener.AcceptAsync();
+var handler2 = await listener.AcceptAsync();
 while (true)
 {
     try
     {
-        var handler = await listener.AcceptAsync();
-        sockets.Add(handler);
+        Console.WriteLine("Estoy aceptando una conexion");
         var buffer = new byte[1_024];
         var received = await handler.ReceiveAsync(buffer, SocketFlags.None);
         var response = Encoding.UTF8.GetString(buffer, 0, received);
@@ -49,9 +49,17 @@ while (true)
             await handler.SendAsync(echoBytes, 0);
                 Console.WriteLine(
                     $"Socket server sent acknowledgment: \"{ackMessage}\"");
-            handler.Shutdown(SocketShutdown.Both);
-            handler.Close();
+            await handler2.SendAsync(echoBytes, 0);
+                Console.WriteLine(
+                    $"Socket server sent acknowledgment: \"{ackMessage}\"");
+            /*foreach (var socket in sockets)
+            {
+                Console.WriteLine(socket.Connected);
+            }*/ 
+            /*handler.Shutdown(SocketShutdown.Both);
+            handler.Close();*/
             /*break;*/
+
         }
     }
     catch (ArgumentNullException ane)

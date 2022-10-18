@@ -14,15 +14,16 @@ IPEndPoint ipEndPoint = new IPEndPoint(ipAddress, 11000);
 
 byte[] bytes = new byte[1024];
 
+using Socket client = new(
+ipEndPoint.AddressFamily, 
+SocketType.Stream, 
+ProtocolType.Tcp);
+client.Connect(ipEndPoint);  
 while (true)
 {
+    
     // Send message.
-    using Socket client = new(
-    ipEndPoint.AddressFamily, 
-    SocketType.Stream, 
-    ProtocolType.Tcp);
     var msg = Console.ReadLine();
-    await client.ConnectAsync(ipEndPoint);  
     var message = $"{msg}Hi friends 👋!<|EOM|>";
     var messageBytes = Encoding.UTF8.GetBytes(message);
     _ = await client.SendAsync(messageBytes, SocketFlags.None);
@@ -35,8 +36,8 @@ while (true)
 
     Console.WriteLine(
         $"Socket client received acknowledgment: \"{response}\"");
-    client.Shutdown(SocketShutdown.Both);
-    client.Close();
+    /*client.Shutdown(SocketShutdown.Both);
+    client.Close();*/
         // Sample output:
     //     Socket client sent message: "Hi friends 👋!<|EOM|>"
     //     Socket client received acknowledgment: "<|ACK|>"
