@@ -1,6 +1,7 @@
-namespace Escoba;
+namespace Backend;
 
 public class Player
 {
-    private List<Card> hand { get; set;}
+    private List<Card> Hand { get; set;}
+    public string Name { get; set; } = "nombre por defecto";
 }

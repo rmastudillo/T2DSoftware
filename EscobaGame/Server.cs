@@ -1,4 +1,4 @@
-namespace Escoba;
+namespace Backend;
 
 public class Server
 {

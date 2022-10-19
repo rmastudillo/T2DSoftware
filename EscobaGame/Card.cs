@@ -1,4 +1,4 @@
-namespace Escoba;
+namespace Backend;
 
 // Root myDeserializedClass = JsonConvert.DeserializeObject<List<Root>>(myJsonResponse);
 public class Card

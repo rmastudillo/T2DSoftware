@@ -1,4 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using Escoba;
+using Backend;
+const string imageName = "cards.json";
+const string cardsFolder = @"src";
+var cardsPath = Path.Combine (cardsFolder,imageName) ;
+
+Console.WriteLine("Aca se conecta el front con el back");
+var juego = new Game(cardsPath);
+/*
+// See https://aka.ms/new-console-template for more information
 
 using System.Net.Sockets;
 using System.Text;
@@ -37,8 +46,9 @@ while (true)
     Console.WriteLine(
         $"Socket client received acknowledgment: \"{response}\"");
     /*client.Shutdown(SocketShutdown.Both);
-    client.Close();*/
+    client.Close();#1#
         // Sample output:
     //     Socket client sent message: "Hi friends 👋!<|EOM|>"
     //     Socket client received acknowledgment: "<|ACK|>"
 }
+*/
