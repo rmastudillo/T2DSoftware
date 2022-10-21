@@ -17,10 +17,12 @@ public class Game
     {
         var jsonString = File.ReadAllText(cardsPath);
         Deck = Deserialize<List<Card>>(jsonString) ?? 
-                    throw new InvalidOperationException("No se cargaron correctamente las cartas");
-        PlayerOne = new Player();
-        PlayerTwo = new Player();
-        var hola = new Dictionary<string, int>();
+                    throw new InvalidOperationException(
+                        "No se cargaron correctamente las cartas");
+        PlayerOne = new Player("Player 1");
+        PlayerTwo = new Player("Player 2");
+        // Ejemplo de serialización para enviar datos
+        /*var hola = new Dictionary<string, int>();
         hola.Add("playcard", 2);
         var feo = Serialize(hola);
         var lindo = Deserialize<Dictionary<string,int>>(feo);
@@ -30,7 +32,7 @@ public class Game
         Console.WriteLine(eem);
         Console.WriteLine(hola);
         var lindos = Deserialize<Move>(eem);
-        Console.WriteLine(lindos.playerMove["playcard"]);
+        Console.WriteLine(lindos.playerMove["playcard"]);*/
     }
 
     
@@ -39,12 +41,12 @@ public class Game
 [Serializable]
 public class Move
 {
-    public Player player { get; set; }
-    public Dictionary<string, int> playerMove { get; set; }
+    public Player Player { get; set; }
+    public Dictionary<string, int> PlayerMove { get; set; }
 
     public Move(Player player, Dictionary<string, int> playerMove)
     {
-        this.player = player;
-        this.playerMove = playerMove;
+        this.Player = player;
+        this.PlayerMove = playerMove;
     }
 }

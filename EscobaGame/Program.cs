@@ -4,8 +4,8 @@ const string imageName = "cards.json";
 const string cardsFolder = @"src";
 var cardsPath = Path.Combine (cardsFolder,imageName) ;
 
-Console.WriteLine("Aca se conecta el front con el back");
-var juego = new Game(cardsPath);
+var newGame = new Game(cardsPath);
+
 /*
 // See https://aka.ms/new-console-template for more information
 
