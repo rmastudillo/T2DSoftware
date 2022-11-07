@@ -1,20 +1,5 @@
 namespace EscobaServer;
 
-public class EscobaGame
-{
-    
-}
-
-public class Player
-{
-    
-}
-
-public class Register
-{
-    
-}
-
 public class Deck
 {
     private List<Card> _cards = GenerateDeck();
@@ -32,29 +17,25 @@ public class Deck
         }
         return newdeck;
     }
+
+    private int NumberOfCards()
+    {
+        return _cards.Count;
+    }
     
     public void ShuffleDeck()
     {
         _cards = _cards.OrderBy(carta => GeneradorNumerosAleatorios.Generar()).ToList();
     }
-}
 
-public class Card
-{
-    public string Pinta { get; set; }
-    public int Value { get; set; }
-    public string Name { get; set; }
-
-    public Card(string pinta, int value)
+    public Card DrawCard()
     {
-        Pinta = pinta;
-        Value = value;
-        Name = value switch
-        {
-            8 => $"Jota_{pinta}",
-            9 => $"Caballo_{pinta}",
-            10 => $"Rey_{pinta}",
-            _ => $"{value}_{pinta}"
-        };
+        var card = _cards.Last();
+        _cards.Remove(card);
+        return card;
+    }
+    public void AddCards(List<Card> cards)
+    {
+        _cards.AddRange(_cards);
     }
 }
