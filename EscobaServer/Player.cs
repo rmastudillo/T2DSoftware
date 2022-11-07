@@ -3,15 +3,15 @@ namespace EscobaServer;
 public class Player
 {
     private List<Card> _hand = new List<Card>();
-    private string Name { get; }
+    private int Id { get; }
     public List<Card> EarnedCards = new List<Card>();
-    public Player(string name)
+    public Player(int id)
     {
-        Name = name;
+        Id = id;
     }
     public override string ToString()
     {
-        return Name;
+        return $"Player {Id}";
     }
 
     public Card PlayCardFromHand(int indexInHand)
