@@ -1,3 +1,5 @@
+namespace EscobaServer;
+
 public static class GeneradorNumerosAleatorios
 { 
     private const int RandomSeed = 0; 
