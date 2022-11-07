@@ -65,6 +65,16 @@ public class Messages
         Console.Write("\n-----------------------------------\n");
     }
 
+    public void CardWon(int playerId, List<string> cardsWon)
+    {
+        var cards = string.Join(", ", cardsWon);
+        var message = new List<string>(new[]
+        {
+            $"Jugador {playerId} se lleva las siguientes cartas {cards}"
+        });
+        ListMessagePrinter(message);
+    }
+
     private void InputMessage(int maxOption)
     {
         var mainMenuMessage = new List<string>(new[]
