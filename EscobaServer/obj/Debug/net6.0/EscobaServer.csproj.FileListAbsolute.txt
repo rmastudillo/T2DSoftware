@@ -1,15 +1,30 @@
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\bin\Debug\net6.0\EscobaServer.exe
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\bin\Debug\net6.0\EscobaServer.deps.json
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\bin\Debug\net6.0\EscobaServer.runtimeconfig.json
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\bin\Debug\net6.0\EscobaServer.dll
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\bin\Debug\net6.0\EscobaServer.pdb
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\EscobaServer.csproj.AssemblyReference.cache
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\EscobaServer.GeneratedMSBuildEditorConfig.editorconfig
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\EscobaServer.AssemblyInfoInputs.cache
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\EscobaServer.AssemblyInfo.cs
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\EscobaServer.csproj.CoreCompileInputs.cache
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\EscobaServer.dll
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\refint\EscobaServer.dll
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\EscobaServer.pdb
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\EscobaServer.genruntimeconfig.cache
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\ref\EscobaServer.dll
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/bin/Debug/net6.0/EscobaServer.exe
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/bin/Debug/net6.0/EscobaServer.deps.json
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/bin/Debug/net6.0/EscobaServer.runtimeconfig.json
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/bin/Debug/net6.0/EscobaServer.dll
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/bin/Debug/net6.0/EscobaServer.pdb
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.csproj.AssemblyReference.cache
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.GeneratedMSBuildEditorConfig.editorconfig
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.AssemblyInfoInputs.cache
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.AssemblyInfo.cs
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.csproj.CoreCompileInputs.cache
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.dll
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/obj/Debug/net6.0/refint/EscobaServer.dll
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.pdb
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.genruntimeconfig.cache
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaServer/obj/Debug/net6.0/ref/EscobaServer.dll
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/bin/Debug/net6.0/EscobaServer
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/bin/Debug/net6.0/EscobaServer.deps.json
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/bin/Debug/net6.0/EscobaServer.runtimeconfig.json
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/bin/Debug/net6.0/EscobaServer.dll
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/bin/Debug/net6.0/EscobaServer.pdb
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.csproj.AssemblyReference.cache
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.GeneratedMSBuildEditorConfig.editorconfig
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.AssemblyInfoInputs.cache
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.AssemblyInfo.cs
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.csproj.CoreCompileInputs.cache
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.dll
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/obj/Debug/net6.0/refint/EscobaServer.dll
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.pdb
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/obj/Debug/net6.0/EscobaServer.genruntimeconfig.cache
+/Users/felipelois/Desktop/T2DSoftware/EscobaServer/obj/Debug/net6.0/ref/EscobaServer.dll
