@@ -8,6 +8,7 @@ public class Messages
         var consolidateMessage = string.Join(spliter, listMessage);
         Console.Write(consolidateMessage);
     }
+
     public void WelcomeMessage()
     {
         var message = new List<string>(new[]
@@ -38,6 +39,30 @@ public class Messages
             $"Baraja el maso el jugador {playerId}!\n",
         });
         ListMessagePrinter(message);
+    }
+
+    public void Escoba(int playerId)
+    {
+        var message = new List<string>(new[]
+        {
+            $"ESCOBA ! **************************************************  JUGADOR {playerId}\n",
+        });
+        ListMessagePrinter(message);
+    }
+
+    public void HandStats(List<string> cardsWonPlayer1, List<string> cardsWonPlayer2)
+    {
+        Console.Write("-----------------------------------\nCartas ganadas en esta ronda");
+        var cards1 = string.Join(", ", cardsWonPlayer1);
+        var cards2 = string.Join(", ", cardsWonPlayer2);
+        Console.Write("\n    Jugador 0: ");
+        Console.Write(cards1);
+        Console.Write("\n    Jugador 1: ");
+        Console.Write(cards2);
+        Console.Write("\n-----------------------------------\nTotal puntos ganados");
+        Console.Write("\n    Jugador 0: 1");
+        Console.Write("\n    Jugador 1: 2");
+        Console.Write("\n-----------------------------------\n");
     }
 
     private void InputMessage(int maxOption)
