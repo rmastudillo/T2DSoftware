@@ -38,4 +38,9 @@ public class Player
         EarnedCards.Clear();
         return cardsToDeck;
     }
+
+    public List<string> PlayerHandToString()
+    {
+        return _hand.Select(card => card.ToString()).ToList();
+    }
 }

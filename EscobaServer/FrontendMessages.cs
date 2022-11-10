@@ -1,6 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
-
-namespace FrontendMessages;
+namespace EscobaServer;
 public class Messages
 {
     private static void ListMessagePrinter(IEnumerable<string> listMessage, string spliter = "")
