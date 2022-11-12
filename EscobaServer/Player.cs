@@ -21,7 +21,7 @@ public class Player
         return cardToBePlayed;
     }
 
-    public void DrawCard(Card card)
+    public void GetCard(Card card)
     {
         _hand.Add(card);
     }

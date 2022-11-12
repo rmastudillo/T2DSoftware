@@ -18,4 +18,9 @@ public class Board
     {
         return CardsOnTable.Select(card => card.ToString()).ToList();
     }
+
+    public void AddCard(Card card)
+    {
+        CardsOnTable.Add(card);
+    }
 }

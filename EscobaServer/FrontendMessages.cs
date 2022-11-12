@@ -77,7 +77,7 @@ public class Messages
     {
         var mainMenuMessage = new List<string>(new[]
         {
-            $"Ingresa un número entre 1 y {maxOption}:"
+            $"Ingresa un número entre 1 y {maxOption}:\n"
         });
         ListMessagePrinter(mainMenuMessage);
     }
@@ -96,17 +96,16 @@ public class Messages
     {
         var mainMenuMessage = new List<string>(new[]
         {
-            $"Juega {playerName}\n",
+            $"\n* Juega {playerName} *\n",
             "Mesa actual: "
         });
         ListMessagePrinter(mainMenuMessage);
         var boardCopy = AddIndexToListString(currentBoard);
         ListMessagePrinter(boardCopy, ", ");
-        Console.Write("\n");
-        Console.WriteLine("Mano jugador: ");
+        Console.Write("\nMano jugador: ");
         var playerHandCopy = AddIndexToListString(playerHand);
         ListMessagePrinter(playerHandCopy, ", ");
-        Console.WriteLine("¿Qué carta quieres bajar?");
+        Console.WriteLine("\n¿Qué carta quieres bajar?");
         InputMessage(playerHand.Count);
     }
 }

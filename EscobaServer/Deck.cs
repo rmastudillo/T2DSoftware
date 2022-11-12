@@ -18,7 +18,7 @@ public class Deck
         return newdeck;
     }
 
-    private int NumberOfCards()
+    public int NumberOfCards()
     {
         return _cards.Count;
     }
@@ -28,7 +28,7 @@ public class Deck
         _cards = _cards.OrderBy(carta => GeneradorNumerosAleatorios.Generar()).ToList();
     }
 
-    public Card DrawCard()
+    public Card GetTopCard()
     {
         var card = _cards.Last();
         _cards.Remove(card);
