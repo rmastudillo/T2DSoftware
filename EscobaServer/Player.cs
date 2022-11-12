@@ -2,7 +2,7 @@ namespace EscobaServer;
 
 public class Player
 {
-    private List<Card> _hand = new List<Card>();
+    public List<Card> _hand = new List<Card>();
     private int Id { get; }
     public List<Card> EarnedCards = new List<Card>();
     public Player(int id)

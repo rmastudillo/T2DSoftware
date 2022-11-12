@@ -90,26 +90,33 @@ public class EscobaGame
     private void TestFucnt()
     {
         var listmesa = new List<int> { 7, 11, 7, 2 };
-        int[] set = { 7, 8, 1, 7, 6,2 };
+        int[] set = { 7, 8, 1, 7,6,2 };
         Console.WriteLine("Comienza iteracionxx");
-        var algo = GetCombinations(set, 15, new List<int>());
+        var cartas = Board.CardsOnTable;
+        cartas.Insert(0, CurrentPlayer._hand[0]);
+        var algo = GetCombinations(Board.CardsOnTable, 15, new List<Card>{});
         foreach (var s in algo) {
             Console.WriteLine("Comienza iteracion");
             Console.WriteLine(s);
+            foreach (var VARIABLE in s)
+            {
+                Console.Write(VARIABLE);
+            }
         }
     }
 
-    public  IEnumerable<int> GetCombinations(int[] set, int sum, IEnumerable<int> values) {
-        for (var i = 0; i < set.Length; i++) {
-            var left = sum - set[i];
-            var vals = new List<int>(set[i]);
+    public  IEnumerable<List<Card>> GetCombinations(List<Card> set, int sum, List<Card> values) {
+        for (var i = 0; i < set.Count; i++) {
+            var left = sum - set[i].Value;
+            var vals = new List<Card>(){set[i]};
             vals.AddRange(values);
             if (left == 0) {
                 yield return vals;
             } else {
-                var possible = set.Take(i).Where(j => j <= sum).ToArray();
+                var possible = set.Take(i).Where(j => j.Value <= sum).ToArray();
+                var asd = new List<Card>(possible);
                 if (possible.Length <= 0) continue;
-                foreach (var s in GetCombinations(possible, left, vals)) {
+                foreach (var s in GetCombinations(asd, left, vals)) {
                     yield return s;
                 }
             }
