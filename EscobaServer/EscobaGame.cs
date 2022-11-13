@@ -49,7 +49,7 @@ public class EscobaGame
     {
         DealingCardsToPlayers();
         DealingCardsIntoBoard();
-        for (var j = 0; j < 1; j++)
+        for (var j = 0; j < 2; j++)
         {
             SwapPlayerTurn();
             PlayerTurn();
@@ -62,11 +62,33 @@ public class EscobaGame
     }
     private void PlayerTurn()
     {
-        ShowPlayerOptions();
+        ShowPlayerOptionToPlay();
         var playerInput = GetPlayerInput();
+        PlayACardFromHand(playerInput);
+    }
+
+    private void PlayACardFromHand(int playerInput)
+    {
         var cardToPlay = CurrentPlayer.PlayCardFromHand(playerInput);
         var possiblePlays= CheckPosiblePlays(cardToPlay).ToList();
-        ShowPlayerPossiblePlays(possiblePlays);
+        if (possiblePlays.Count > 1)
+        {
+            ShowPlayerPossiblePlays(possiblePlays);
+        }
+        else
+        {
+            MakingAPlay(possiblePlays[0]);
+        }
+        
+    }
+
+    private void MakingAPlay(List<Card> cards)
+    {
+        foreach (var card in cards)
+        {
+            Board.RemoveCard(card);
+        }
+        CurrentPlayer.AddEarnedCards(cards);
     }
 
     private List<string> PossiblePlayToString(List<Card> possiblePlay)
@@ -84,7 +106,7 @@ public class EscobaGame
         Messages.ShowPlays(ListOfPlaysToString(plays));
     }
 
-    private void ShowPlayerOptions()
+    private void ShowPlayerOptionToPlay()
     {
         var playerName = CurrentPlayer.ToString();
         var hand = CurrentPlayer.PlayerHandToString();
@@ -104,23 +126,7 @@ public class EscobaGame
         possibleCardsToCombine.Insert(0,cardToPlay);
         return GetPlays(possibleCardsToCombine, 15, new List<Card>());
     }
-
-    private void TestFucnt()
-    {
-        var listmesa = new List<int> { 7, 11, 7, 2 };
-        int[] set = { 7, 8, 1, 7,6,2 };
-        Console.WriteLine("Comienza iteracionxx");
-        var cartas = Board.CardsOnTable;
-        cartas.Insert(0, CurrentPlayer._hand[0]);
-        var algo = GetPlays(cartas, 15, new List<Card>{});
-        foreach (var s in algo) {
-            foreach (var VARIABLE in s)
-            {
-                Console.Write(VARIABLE);
-            }
-            Console.Write("\n");
-        }
-    }
+    
     
     public  IEnumerable<List<Card>> GetPlays(List<Card> cardsToCombine, int targetSumOfCards, List<Card> listOfPlays) {
         for (var card = 0; card < cardsToCombine.Count; card++) {
@@ -128,11 +134,7 @@ public class EscobaGame
             var validPlays = new List<Card>(){cardsToCombine[card]};
             validPlays.AddRange(listOfPlays);
             if (currentSum == 0) {
-                if (validPlays.First() == cardsToCombine.First())
-                {
-                    yield return validPlays;
-                }
-
+                if (validPlays.First() == cardsToCombine.First()) yield return validPlays;
             } else {
                 var possiblePlays = new List<Card>(cardsToCombine.Take(card).Where(
                         possibleCard => possibleCard.Value <= targetSumOfCards));

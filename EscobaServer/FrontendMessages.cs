@@ -77,6 +77,7 @@ public class Messages
             ListMessagePrinter(listOfPlays[numberOfPlay],", ");
         }
         Console.WriteLine("¿Que jugada desea usar?");
+        InputMessage(listOfPlays.Count);
     }
     public void CardWon(int playerId, List<string> cardsWon)
     {
