@@ -12,7 +12,7 @@ public class Player
     }
     public override string ToString()
     {
-        return $"Player {Id}";
+        return $"Jugador {Id}";
     }
 
     public Card PlayCardFromHand(int indexInHand)

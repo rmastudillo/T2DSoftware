@@ -17,6 +17,10 @@ public class Messages
             });
         ListMessagePrinter(message);
     }
+    public void EndGameMessage(List<string> message)
+    {
+        ListMessagePrinter(message);
+    }
 
     public void MainMenu()
     {
@@ -29,6 +33,7 @@ public class Messages
         ListMessagePrinter(mainMenuMessage);
         InputMessage(2);
     }
+    
 
     public void DealingCards(string player)
     {

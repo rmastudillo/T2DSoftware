@@ -65,8 +65,32 @@ public class EscobaGame
             RePopulateDeck();
             SwapPlayerTurn();
         }
+
+        AnnounceWinner();
     }
 
+    private void AnnounceWinner()
+    {
+        var winnerMessage = new List<string>(){"x Fin de la partida x\n"};
+        var playerOnePoints = Board.PlayerOne.GetEarnedPoints();
+        var playerTwoPoints = Board.PlayerTwo.GetEarnedPoints();
+        var differenceOfPoints = playerOnePoints - playerTwoPoints;
+        switch (differenceOfPoints)
+        {
+            case > 0:
+            {
+                winnerMessage.Add($"Ganó el {Board.PlayerOne.ToString()} con {playerOnePoints} puntos.");
+                break;
+            }
+            case < 0:
+                winnerMessage.Add($"Ganó el {Board.PlayerTwo.ToString()} con {playerTwoPoints} puntos.");
+                break;
+            case 0:
+                winnerMessage.Add($"Empate con {playerOnePoints} puntos.");
+                break;
+        }
+        Messages.EndGameMessage(winnerMessage);
+    }
     private void RePopulateDeck()
     {
         var playerOneEarnedCards = Board.PlayerOne.ReturnCardsToDeck();
