@@ -63,6 +63,21 @@ public class Messages
         Console.Write("\n-----------------------------------\n");
     }
 
+    private void AddOptionToPlay(int numerOfOption,List<string> play)
+    {
+        play[0] = $"({numerOfOption+1}) " + play[0];
+        play[^1] += "\n";
+    }
+    public void ShowPlays(List<List<string>> listOfPlays)
+    {
+
+        for (var numberOfPlay = 0; numberOfPlay < listOfPlays.Count; numberOfPlay++)
+        {
+            AddOptionToPlay(numberOfPlay,listOfPlays[numberOfPlay]);
+            ListMessagePrinter(listOfPlays[numberOfPlay],", ");
+        }
+        Console.WriteLine("¿Que jugada desea usar?");
+    }
     public void CardWon(int playerId, List<string> cardsWon)
     {
         var cards = string.Join(", ", cardsWon);

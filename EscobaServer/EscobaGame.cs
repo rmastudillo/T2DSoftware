@@ -49,7 +49,7 @@ public class EscobaGame
     {
         DealingCardsToPlayers();
         DealingCardsIntoBoard();
-        for (var j = 0; j < 3; j++)
+        for (var j = 0; j < 1; j++)
         {
             SwapPlayerTurn();
             PlayerTurn();
@@ -64,6 +64,24 @@ public class EscobaGame
     {
         ShowPlayerOptions();
         var playerInput = GetPlayerInput();
+        var cardToPlay = CurrentPlayer.PlayCardFromHand(playerInput);
+        var possiblePlays= CheckPosiblePlays(cardToPlay).ToList();
+        ShowPlayerPossiblePlays(possiblePlays);
+    }
+
+    private List<string> PossiblePlayToString(List<Card> possiblePlay)
+    {
+        return possiblePlay.Select(card => card.ToString()).ToList();
+    }
+
+    private List<List<string>> ListOfPlaysToString(List<List<Card>> possiblePlays)
+    {
+        return possiblePlays.Select(PossiblePlayToString).ToList();
+    }
+    private void ShowPlayerPossiblePlays(IEnumerable<List<Card>> possiblePlays)
+    {
+        var plays = possiblePlays.ToList();
+        Messages.ShowPlays(ListOfPlaysToString(plays));
     }
 
     private void ShowPlayerOptions()
@@ -77,14 +95,14 @@ public class EscobaGame
     private int GetPlayerInput()
     {
         var playerInput = Convert.ToInt32(Console.ReadLine());
-        CheckPosiblePlays(playerInput);
-        return playerInput;
+        return playerInput - 1 ;
     }
 
-    private void CheckPosiblePlays(int playerInput)
+    private IEnumerable<List<Card>> CheckPosiblePlays(Card cardToPlay)
     {
-        Console.WriteLine(Board.CardsOnTable[0].Value);
-        TestFucnt();
+        var possibleCardsToCombine = new List<Card>(Board.CardsOnTable);
+        possibleCardsToCombine.Insert(0,cardToPlay);
+        return GetPlays(possibleCardsToCombine, 15, new List<Card>());
     }
 
     private void TestFucnt()
@@ -94,30 +112,34 @@ public class EscobaGame
         Console.WriteLine("Comienza iteracionxx");
         var cartas = Board.CardsOnTable;
         cartas.Insert(0, CurrentPlayer._hand[0]);
-        var algo = GetCombinations(Board.CardsOnTable, 15, new List<Card>{});
+        var algo = GetPlays(cartas, 15, new List<Card>{});
         foreach (var s in algo) {
-            Console.WriteLine("Comienza iteracion");
-            Console.WriteLine(s);
             foreach (var VARIABLE in s)
             {
                 Console.Write(VARIABLE);
             }
+            Console.Write("\n");
         }
     }
+    
+    public  IEnumerable<List<Card>> GetPlays(List<Card> cardsToCombine, int targetSumOfCards, List<Card> listOfPlays) {
+        for (var card = 0; card < cardsToCombine.Count; card++) {
+            var currentSum = targetSumOfCards - cardsToCombine[card].Value;
+            var validPlays = new List<Card>(){cardsToCombine[card]};
+            validPlays.AddRange(listOfPlays);
+            if (currentSum == 0) {
+                if (validPlays.First() == cardsToCombine.First())
+                {
+                    yield return validPlays;
+                }
 
-    public  IEnumerable<List<Card>> GetCombinations(List<Card> set, int sum, List<Card> values) {
-        for (var i = 0; i < set.Count; i++) {
-            var left = sum - set[i].Value;
-            var vals = new List<Card>(){set[i]};
-            vals.AddRange(values);
-            if (left == 0) {
-                yield return vals;
             } else {
-                var possible = set.Take(i).Where(j => j.Value <= sum).ToArray();
-                var asd = new List<Card>(possible);
-                if (possible.Length <= 0) continue;
-                foreach (var s in GetCombinations(asd, left, vals)) {
-                    yield return s;
+                var possiblePlays = new List<Card>(cardsToCombine.Take(card).Where(
+                        possibleCard => possibleCard.Value <= targetSumOfCards));
+                if (possiblePlays.Count <= 0) continue;
+                foreach (var plays in GetPlays(
+                             possiblePlays, currentSum, validPlays)) {
+                    yield return plays;
                 }
             }
         }

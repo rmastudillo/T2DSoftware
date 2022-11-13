@@ -23,4 +23,8 @@ public class Board
     {
         CardsOnTable.Add(card);
     }
+    public void RemoveCard(Card card)
+    {
+        CardsOnTable.Remove(card);
+    }
 }
