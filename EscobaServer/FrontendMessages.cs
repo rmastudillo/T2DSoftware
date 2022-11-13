@@ -39,11 +39,11 @@ public class Messages
         ListMessagePrinter(message);
     }
 
-    public void Escoba(int playerId)
+    public void Escoba(string playeName)
     {
         var message = new List<string>(new[]
         {
-            $"ESCOBA ! **************************************************  JUGADOR {playerId}\n",
+            $"ESCOBA ! **************************************************  JUGADOR {playeName}\n",
         });
         ListMessagePrinter(message);
     }
@@ -79,12 +79,12 @@ public class Messages
         Console.WriteLine("¿Que jugada desea usar?");
         InputMessage(listOfPlays.Count);
     }
-    public void CardWon(int playerId, List<string> cardsWon)
+    public void CardWon(string playername, List<string> cardsWon)
     {
         var cards = string.Join(", ", cardsWon);
         var message = new List<string>(new[]
         {
-            $"Jugador {playerId} se lleva las siguientes cartas {cards}"
+            $"{playername} se lleva las siguientes cartas: {cards}\n"
         });
         ListMessagePrinter(message);
     }

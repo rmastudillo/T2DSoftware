@@ -49,7 +49,7 @@ public class EscobaGame
     {
         DealingCardsToPlayers();
         DealingCardsIntoBoard();
-        for (var j = 0; j < 2; j++)
+        for (var j = 0; j < 4; j++)
         {
             SwapPlayerTurn();
             PlayerTurn();
@@ -92,21 +92,24 @@ public class EscobaGame
             Board.RemoveCard(card);
         }
         CurrentPlayer.AddEarnedCards(cards);
+        Messages.CardWon(CurrentPlayer.ToString(),ListOfCardsToString(cards));
+        if (Board.CardsOnTable.Count == 0)Messages.Escoba(CurrentPlayer.ToString());
     }
 
-    private List<string> PossiblePlayToString(List<Card> possiblePlay)
+    private List<string> ListOfCardsToString(List<Card> possiblePlay)
     {
         return possiblePlay.Select(card => card.ToString()).ToList();
     }
 
     private List<List<string>> ListOfPlaysToString(List<List<Card>> possiblePlays)
     {
-        return possiblePlays.Select(PossiblePlayToString).ToList();
+        return possiblePlays.Select(ListOfCardsToString).ToList();
     }
-    private void ShowPlayerPossiblePlays(IEnumerable<List<Card>> possiblePlays)
+    private void ShowPlayerPossiblePlays(List<List<Card>> possiblePlays)
     {
-        var plays = possiblePlays.ToList();
-        Messages.ShowPlays(ListOfPlaysToString(plays));
+        Messages.ShowPlays(ListOfPlaysToString(possiblePlays));
+        var playerInput = Convert.ToInt32(Console.ReadLine());
+        MakingAPlay(possiblePlays[playerInput-1]);
     }
 
     private void ShowPlayerOptionToPlay()
