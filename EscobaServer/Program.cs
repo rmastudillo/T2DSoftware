@@ -14,21 +14,32 @@ var playerTwo = new Player(1);
 // var game = new EscobaGame(playerOne,playerTwo);
 // game.NewHand();
 int num_players = 1;
+var escuchando = true;
+var state = true;
 TcpListener listener = new TcpListener(IPAddress.Any, 8000);
 listener.Start();
 while (true)
 {
-    if (num_players <= 2)
+    if (escuchando)
     {
         Console.Write("Esperando por una conexión...\n");
+        TcpClient tc = listener.AcceptTcpClient();
+        Console.Write($"Cliente {num_players} Conectado!\n");
+        ThreadPool.QueueUserWorkItem(ThreadProc, new object[] { tc, num_players });
+        num_players += 1;
+        if (num_players == 3)
+        {
+            escuchando = false;
+        }
     }
-    TcpClient tc = listener.AcceptTcpClient();
-    Console.Write($"Cliente {num_players} Conectado!\n");
-    ThreadPool.QueueUserWorkItem(ThreadProc, new object[] { tc, num_players });
-    num_players += 1;
+    if (!state)
+    {
+        listener.Stop(); // dejamos de escuchar
+        break;
+    }
 }
 
-static void ThreadProc(object obj)
+void ThreadProc(object obj)
 {
     object[] param = obj as object[];
     var client = (TcpClient)param[0];
@@ -38,11 +49,27 @@ static void ThreadProc(object obj)
     StreamWriter writer = new StreamWriter(ns);
 
     var mensaje = reader.ReadLine();
-    Console.WriteLine($"El cliente {param[1]} dice: " + mensaje);
-    writer.WriteLine(mensaje);
-    writer.Flush();
-    // Do your work here
+    while (mensaje != "Salir")
+    {
+        Console.WriteLine($"El cliente {param[1]} dice: " + mensaje);
+        writer.WriteLine(mensaje);
+        writer.Flush();
+        mensaje = reader.ReadLine();
+    }
+    num_players -= 1;
+    Console.Write("Un cliente abandonó el servidor :(\n");
+    client.Close(); // cerramos la conexio ́n
+    if (num_players == 1)
+    {
+        Console.Write(num_players + "\n");
+        Console.Write("cerrando servidor\n");
+        state = false;
+    }
 }
+// if (mensaje == "Salir")
+// {
+//     num_players -= 1;
+// }
 
 // Console.WriteLine("El cliente dice: " + reader.ReadLine());
 // writer.WriteLine("Dejame en paz! >=(");
