@@ -71,15 +71,18 @@ public class EscobaGame
     {
         var cardToPlay = CurrentPlayer.PlayCardFromHand(playerInput);
         var possiblePlays= CheckPosiblePlays(cardToPlay).ToList();
-        if (possiblePlays.Count > 1)
+        switch (possiblePlays.Count)
         {
-            ShowPlayerPossiblePlays(possiblePlays);
+            case 0:
+                Board.AddCard(cardToPlay) ;
+                break;
+            case 1:
+                MakingAPlay(possiblePlays[0]);
+                break;
+            case > 1:
+                ShowPlayerPossiblePlays(possiblePlays);
+                break;
         }
-        else
-        {
-            MakingAPlay(possiblePlays[0]);
-        }
-        
     }
 
     private void MakingAPlay(List<Card> cards)
