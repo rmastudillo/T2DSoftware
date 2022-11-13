@@ -1,15 +1,30 @@
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\bin\Debug\net6.0\Escoba.exe
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\bin\Debug\net6.0\Escoba.deps.json
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\bin\Debug\net6.0\Escoba.runtimeconfig.json
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\bin\Debug\net6.0\Escoba.dll
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\bin\Debug\net6.0\Escoba.pdb
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\obj\Debug\net6.0\Escoba.csproj.AssemblyReference.cache
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\obj\Debug\net6.0\Escoba.GeneratedMSBuildEditorConfig.editorconfig
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\obj\Debug\net6.0\Escoba.AssemblyInfoInputs.cache
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\obj\Debug\net6.0\Escoba.AssemblyInfo.cs
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\obj\Debug\net6.0\Escoba.csproj.CoreCompileInputs.cache
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\obj\Debug\net6.0\Escoba.dll
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\obj\Debug\net6.0\refint\Escoba.dll
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\obj\Debug\net6.0\Escoba.pdb
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\obj\Debug\net6.0\Escoba.genruntimeconfig.cache
-D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaGame\obj\Debug\net6.0\ref\Escoba.dll
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/bin/Debug/net6.0/Escoba.exe
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/bin/Debug/net6.0/Escoba.deps.json
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/bin/Debug/net6.0/Escoba.runtimeconfig.json
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/bin/Debug/net6.0/Escoba.dll
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/bin/Debug/net6.0/Escoba.pdb
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.csproj.AssemblyReference.cache
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.GeneratedMSBuildEditorConfig.editorconfig
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.AssemblyInfoInputs.cache
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.AssemblyInfo.cs
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.csproj.CoreCompileInputs.cache
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.dll
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/obj/Debug/net6.0/refint/Escoba.dll
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.pdb
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.genruntimeconfig.cache
+D:/Cosas de la u/Semestre actual/Diseño detallado de software/T2/T2DSoftware/EscobaGame/obj/Debug/net6.0/ref/Escoba.dll
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/bin/Debug/net6.0/Escoba
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/bin/Debug/net6.0/Escoba.deps.json
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/bin/Debug/net6.0/Escoba.runtimeconfig.json
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/bin/Debug/net6.0/Escoba.dll
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/bin/Debug/net6.0/Escoba.pdb
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.csproj.AssemblyReference.cache
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.GeneratedMSBuildEditorConfig.editorconfig
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.AssemblyInfoInputs.cache
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.AssemblyInfo.cs
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.csproj.CoreCompileInputs.cache
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.dll
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/obj/Debug/net6.0/refint/Escoba.dll
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.pdb
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/obj/Debug/net6.0/Escoba.genruntimeconfig.cache
+/Users/felipelois/Desktop/T2DSoftware/EscobaGame/obj/Debug/net6.0/ref/Escoba.dll

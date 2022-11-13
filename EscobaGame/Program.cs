@@ -1,11 +1,27 @@
 ﻿using Escoba;
+using System;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
 using Backend;
 const string imageName = "cards.json";
 const string cardsFolder = @"src";
-var cardsPath = Path.Combine (cardsFolder,imageName) ;
+var cardsPath = Path.Combine(cardsFolder, imageName);
 
 var newGame = new Game(cardsPath);
 
+TcpClient client = new TcpClient();
+client.Connect(IPAddress.Loopback, 8000);
+
+NetworkStream ns = client.GetStream();
+StreamWriter writer = new StreamWriter(ns);
+StreamReader reader = new StreamReader(ns);
+writer.WriteLine("Hola!");
+writer.Flush();
+string response = reader.ReadLine();
+Console.WriteLine("El servidor dice: " + response);
+client.Close(); // cerramos la conexi ́on
 /*
 // See https://aka.ms/new-console-template for more information
 
