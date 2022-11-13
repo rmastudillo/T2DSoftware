@@ -5,6 +5,8 @@ public class EscobaGame
     public Board Board { get; set; }
     private bool Playing = true;
     public Messages Messages = new Messages();
+    public GameNotifications GameNotifications = new GameNotifications();
+    public Helper Helper = new Helper();
     public Player CurrentPlayer { get; set; }
     private Player LastPlayerThatMakeAPlay { get; set; }
 
@@ -59,32 +61,11 @@ public class EscobaGame
             }
             PlayerGetBoardCards();
             AsignPlayersPoints();
-            ReportEndOfTurn();
+            GameNotifications.ReportEndOfTurn(Board.PlayerOne, Board.PlayerTwo);
             RePopulateDeck();
             SwapPlayerTurn();
         }
-        AnnounceWinner();
-    }
-
-    private void AnnounceWinner()
-    {
-        var winnerMessage = new List<string>() { "x Fin de la partida x\n" };
-        var playerOnePoints = Board.PlayerOne.GetEarnedPoints();
-        var playerTwoPoints = Board.PlayerTwo.GetEarnedPoints();
-        var differenceOfPoints = playerOnePoints - playerTwoPoints;
-        switch (differenceOfPoints)
-        {
-            case 0:
-                winnerMessage.Add($"Empate con {playerOnePoints} puntos.");
-                break;
-            case > 0:
-                winnerMessage.Add($"Ganó el {Board.PlayerOne.ToString()} con {playerOnePoints} puntos.");
-                break;
-            case < 0:
-                winnerMessage.Add($"Ganó el {Board.PlayerTwo.ToString()} con {playerTwoPoints} puntos.");
-                break;
-        }
-        Messages.EndGameMessage(winnerMessage);
+        GameNotifications.AnnounceWinner(Board.PlayerOne, Board.PlayerTwo);
     }
     private void RePopulateDeck()
     {
@@ -97,27 +78,20 @@ public class EscobaGame
     {
         return Board.PlayerOne.GetEarnedPoints() >= 16 || Board.PlayerTwo.GetEarnedPoints() >= 16;
     }
-    private void ReportEndOfTurn()
-    {
-        var playerOneEarnedCards = ListOfCardsToString(Board.PlayerOne.EarnedCards);
-        var playerTwoEarnedCards = ListOfCardsToString(Board.PlayerTwo.EarnedCards);
-        var points = new List<int>() { Board.PlayerOne.GetEarnedPoints(), Board.PlayerTwo.GetEarnedPoints() };
-        Messages.EndTurnReport(playerOneEarnedCards, playerTwoEarnedCards, points);
-    }
     private void SwapPlayerTurn()
     {
         CurrentPlayer = (CurrentPlayer == Board.PlayerOne) ? Board.PlayerTwo : Board.PlayerOne;
     }
     private void PlayerTurn()
     {
-        ShowPlayerOptionToPlay();
+        GameNotifications.ShowPlayerOptionToPlay(CurrentPlayer, Board);
         var playerInput = GetPlayerInput(CurrentPlayer._hand.Count);
         PlayACardFromHand(playerInput);
     }
     private void PlayACardFromHand(int playerInput)
     {
         var cardToPlay = CurrentPlayer.PlayCardFromHand(playerInput);
-        var possiblePlays = CheckPosiblePlays(cardToPlay).ToList();
+        var possiblePlays = Helper.CheckPosiblePlays(cardToPlay, Board).ToList();
         switch (possiblePlays.Count)
         {
             case 0:
@@ -192,7 +166,7 @@ public class EscobaGame
             Board.RemoveCard(card);
         }
         CurrentPlayer.AddEarnedCards(cards);
-        Messages.CardWon(CurrentPlayer.ToString(), ListOfCardsToString(cards));
+        Messages.CardWon(CurrentPlayer.ToString(), Helper.ListOfCardsToString(cards));
         if (Board.CardsOnTable.Count == 0) Escoba();
     }
     private void PlayerGetBoardCards()
@@ -209,13 +183,9 @@ public class EscobaGame
         CurrentPlayer.AddAPoint();
         Messages.Escoba(CurrentPlayer.ToString());
     }
-    private List<string> ListOfCardsToString(List<Card> possiblePlay)
-    {
-        return possiblePlay.Select(card => card.ToString()).ToList();
-    }
     private List<List<string>> ListOfPlaysToString(List<List<Card>> possiblePlays)
     {
-        return possiblePlays.Select(ListOfCardsToString).ToList();
+        return possiblePlays.Select(Helper.ListOfCardsToString).ToList();
     }
     private void ShowPlayerPossiblePlays(List<List<Card>> possiblePlays)
     {
@@ -223,13 +193,6 @@ public class EscobaGame
         Messages.ShowPlays(ListOfPlaysToString(possiblePlays));
         var playerInput = GetPlayerInput(ListOfPlaysToString(possiblePlays).Count);
         MakingAPlay(possiblePlays[playerInput]);
-    }
-    private void ShowPlayerOptionToPlay()
-    {
-        var playerName = CurrentPlayer.ToString();
-        var hand = CurrentPlayer.PlayerHandToString();
-        var cardsOnTable = Board.CardsOnTableToString();
-        Messages.MainTurn(playerName, hand, cardsOnTable);
     }
     private int GetPlayerInput(int maxInputValue)
     {
@@ -241,34 +204,34 @@ public class EscobaGame
         }
         return playerValidInput - 1;
     }
-    private IEnumerable<List<Card>> CheckPosiblePlays(Card cardToPlay)
-    {
-        var possibleCardsToCombine = new List<Card>(Board.CardsOnTable);
-        possibleCardsToCombine.Insert(0, cardToPlay);
-        return GetPlays(possibleCardsToCombine, 15, new List<Card>());
-    }
-    public IEnumerable<List<Card>> GetPlays(List<Card> cardsToCombine, int targetSumOfCards, List<Card> listOfPlays)
-    {
-        for (var card = 0; card < cardsToCombine.Count; card++)
-        {
-            var currentSum = targetSumOfCards - cardsToCombine[card].Value;
-            var validPlays = new List<Card>() { cardsToCombine[card] };
-            validPlays.AddRange(listOfPlays);
-            if (currentSum == 0)
-            {
-                if (validPlays.First() == cardsToCombine.First()) yield return validPlays;
-            }
-            else
-            {
-                var possiblePlays = new List<Card>(cardsToCombine.Take(card).Where(
-                        possibleCard => possibleCard.Value <= targetSumOfCards));
-                if (possiblePlays.Count <= 0) continue;
-                foreach (var plays in GetPlays(
-                             possiblePlays, currentSum, validPlays))
-                {
-                    yield return plays;
-                }
-            }
-        }
-    }
+    // private IEnumerable<List<Card>> CheckPosiblePlays(Card cardToPlay)
+    // {
+    //     var possibleCardsToCombine = new List<Card>(Board.CardsOnTable);
+    //     possibleCardsToCombine.Insert(0, cardToPlay);
+    //     return GetPlays(possibleCardsToCombine, 15, new List<Card>());
+    // }
+    // public IEnumerable<List<Card>> GetPlays(List<Card> cardsToCombine, int targetSumOfCards, List<Card> listOfPlays)
+    // {
+    //     for (var card = 0; card < cardsToCombine.Count; card++)
+    //     {
+    //         var currentSum = targetSumOfCards - cardsToCombine[card].Value;
+    //         var validPlays = new List<Card>() { cardsToCombine[card] };
+    //         validPlays.AddRange(listOfPlays);
+    //         if (currentSum == 0)
+    //         {
+    //             if (validPlays.First() == cardsToCombine.First()) yield return validPlays;
+    //         }
+    //         else
+    //         {
+    //             var possiblePlays = new List<Card>(cardsToCombine.Take(card).Where(
+    //                     possibleCard => possibleCard.Value <= targetSumOfCards));
+    //             if (possiblePlays.Count <= 0) continue;
+    //             foreach (var plays in GetPlays(
+    //                          possiblePlays, currentSum, validPlays))
+    //             {
+    //                 yield return plays;
+    //             }
+    //         }
+    //     }
+    // }
 }

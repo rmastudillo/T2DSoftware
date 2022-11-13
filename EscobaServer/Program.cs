@@ -7,8 +7,8 @@ Console.WriteLine("Hello, World!");
 var Messages = new Messages();
 var playerOne = new Player(0);
 var playerTwo = new Player(1);
-var game = new EscobaGame(playerOne,playerTwo);
-//game.NewHand();
+var game = new EscobaGame(playerOne, playerTwo);
+game.NewHand();
 game.Messages.MainMenu();
 var serverMessage = Console.ReadLine();
 if (serverMessage == "2")
@@ -67,7 +67,7 @@ if (serverMessage == "2")
         }
         numPlayers -= 1;
         Console.Write("Un cliente abandonó el servidor :(\n");
-        client.Close(); // cerramos la conexio ́n
+        client.Close(); // cerramos la conexión
         if (numPlayers == 1)
         {
             Console.Write(numPlayers + "\n");
