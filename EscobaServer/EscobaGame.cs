@@ -1,9 +1,6 @@
-using System.Runtime.InteropServices;
-using System.Windows.Markup;
+using static System.Int32;
 
 namespace EscobaServer;
-
-
 public class EscobaGame
 {
     public Board Board { get; set; }
@@ -53,7 +50,7 @@ public class EscobaGame
             Board.Deck.ShuffleDeck();
             while (Board.Deck.NumberOfCards()>0)
             {
-                Console.WriteLine($"XXXXXXXXXXX Reparte: {CurrentPlayer}");
+                Messages.DealingCards(CurrentPlayer.ToString());
                 DealingCardsToPlayers();
                 DealingCardsIntoBoard();
                 for (var j = 0; j < 6; j++)
@@ -97,7 +94,7 @@ public class EscobaGame
     private void PlayerTurn()
     {
         ShowPlayerOptionToPlay();
-        var playerInput = GetPlayerInput();
+        var playerInput = GetPlayerInput(CurrentPlayer._hand.Count);
         PlayACardFromHand(playerInput);
     }
 
@@ -160,7 +157,7 @@ public class EscobaGame
             case > 0:
                 Board.PlayerOne.AddAPoint();
                 break;
-            default:
+            case < 0:
                 Board.PlayerTwo.AddAPoint();
                 break;
         }
@@ -220,7 +217,7 @@ public class EscobaGame
     {
         LastPlayerThatMakeAPlay = CurrentPlayer;
         Messages.ShowPlays(ListOfPlaysToString(possiblePlays));
-        var playerInput = GetPlayerInput();
+        var playerInput = GetPlayerInput(ListOfPlaysToString(possiblePlays).Count);
         MakingAPlay(possiblePlays[playerInput]);
     }
 
@@ -232,10 +229,15 @@ public class EscobaGame
         Messages.MainTurn(playerName,hand,cardsOnTable);
     }
 
-    private int GetPlayerInput()
+    private int GetPlayerInput(int maxInputValue)
     {
-        var playerInput = Convert.ToInt32(Console.ReadLine());
-        return playerInput - 1 ;
+        var inputIsInt = TryParse(Console.ReadLine(), out var playerValidInput);
+        while (!inputIsInt || ( playerValidInput<1) || (playerValidInput>maxInputValue))
+        {
+            Messages.InvalidInput();
+            inputIsInt = TryParse(Console.ReadLine(), out  playerValidInput);
+        }
+        return playerValidInput - 1 ;
     }
 
     private IEnumerable<List<Card>> CheckPosiblePlays(Card cardToPlay)

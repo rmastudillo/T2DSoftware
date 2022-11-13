@@ -30,11 +30,11 @@ public class Messages
         InputMessage(2);
     }
 
-    public void ShuffleCards(int playerId)
+    public void DealingCards(string player)
     {
         var message = new List<string>(new[]
         {
-            $"Baraja el maso el jugador {playerId}!\n",
+            $"\n>>> Reparte el {player}! <<<\n",
         });
         ListMessagePrinter(message);
     }
@@ -123,5 +123,10 @@ public class Messages
         ListMessagePrinter(playerHandCopy, ", ");
         Console.WriteLine("\n¿Qué carta quieres bajar?");
         InputMessage(playerHand.Count);
+    }
+
+    public void InvalidInput()
+    {
+        ListMessagePrinter(new []{"Error: Input inválido, porfavor selecciona una opción válida:\n"});
     }
 }
