@@ -8,8 +8,20 @@ using Backend;
 const string imageName = "cards.json";
 const string cardsFolder = @"src";
 var cardsPath = Path.Combine(cardsFolder, imageName);
-
 var newGame = new Game(cardsPath);
+
+// void SendMessage(StreamWriter writer, TcpClient client)
+// {
+//     Console.WriteLine("¿Que quieres hacer?\n[1] Enviar mensaje\n[2] Salir\n");
+//     var opcion = Console.ReadLine();
+//     while (opcion != "2")
+//     {
+//         Console.WriteLine("Escribe el mensaje a enviar:");
+//         writer.WriteLine(Console.ReadLine());
+//         writer.Flush();
+//     }
+//     client.Close();
+// }
 
 TcpClient client = new TcpClient();
 client.Connect(IPAddress.Loopback, 8000);
@@ -17,11 +29,18 @@ client.Connect(IPAddress.Loopback, 8000);
 NetworkStream ns = client.GetStream();
 StreamWriter writer = new StreamWriter(ns);
 StreamReader reader = new StreamReader(ns);
-writer.WriteLine("Hola!");
+// SendMessage(writer, client);
+// writer.WriteLine("Hola!");
+Console.WriteLine("¿Que quieres hacer?\n[1] Enviar mensaje\n[2] Salir\n");
+var opcion = Console.ReadLine();
+Console.WriteLine("Escribe el mensaje a enviar:");
+writer.WriteLine(Console.ReadLine());
 writer.Flush();
 string response = reader.ReadLine();
 Console.WriteLine("El servidor dice: " + response);
-client.Close(); // cerramos la conexi ́on
+// client.Close(); // cerramos la conexi ́on
+
+// CloseClient(client);
 /*
 // See https://aka.ms/new-console-template for more information
 
