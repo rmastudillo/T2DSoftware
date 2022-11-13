@@ -36,6 +36,6 @@ public class Deck
     }
     public void AddCards(List<Card> cards)
     {
-        _cards.AddRange(_cards);
+        _cards.AddRange(cards);
     }
 }

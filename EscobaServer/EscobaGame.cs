@@ -10,6 +10,7 @@ public class EscobaGame
     private bool Playing = true;
     private Messages Messages = new Messages();
     public Player CurrentPlayer { get; set; }
+    private Player LastPlayerThatMakeAPlay { get; set; }
 
     public EscobaGame(Player player0, Player player1)
     {
@@ -20,7 +21,7 @@ public class EscobaGame
     private void StartGame()
     {
         Messages.WelcomeMessage();
-        Board.Deck.ShuffleDeck();
+
     }
 
     public void NewHand()
@@ -47,13 +48,46 @@ public class EscobaGame
     }
     private void GameFlow()
     {
-        DealingCardsToPlayers();
-        DealingCardsIntoBoard();
-        for (var j = 0; j < 4; j++)
+        while (!ThereIsAWinner())
         {
+            Board.Deck.ShuffleDeck();
+            while (Board.Deck.NumberOfCards()>0)
+            {
+                Console.WriteLine($"XXXXXXXXXXX Reparte: {CurrentPlayer}");
+                DealingCardsToPlayers();
+                DealingCardsIntoBoard();
+                for (var j = 0; j < 6; j++)
+                {
+                    SwapPlayerTurn();
+                    PlayerTurn();
+                }
+            }
+            PlayerGetBoardCards();
+            AsignPlayersPoints();
+            ReportEndOfTurn();
+            RePopulateDeck();
             SwapPlayerTurn();
-            PlayerTurn();
         }
+    }
+
+    private void RePopulateDeck()
+    {
+        var playerOneEarnedCards = Board.PlayerOne.ReturnCardsToDeck();
+        var playerTwoEarnedCards = Board.PlayerTwo.ReturnCardsToDeck();
+        Board.Deck.AddCards(playerOneEarnedCards);
+        Board.Deck.AddCards(playerTwoEarnedCards);
+    }
+    private bool ThereIsAWinner()
+    {
+        return Board.PlayerOne.GetEarnedPoints() >= 16 || Board.PlayerTwo.GetEarnedPoints() >= 16;
+    }
+
+    private void ReportEndOfTurn()
+    {
+        var playerOneEarnedCards = ListOfCardsToString( Board.PlayerOne.EarnedCards);
+        var playerTwoEarnedCards = ListOfCardsToString( Board.PlayerTwo.EarnedCards);
+        var points = new List<int>() { Board.PlayerOne.GetEarnedPoints(), Board.PlayerTwo.GetEarnedPoints() };
+        Messages.EndTurnReport(playerOneEarnedCards, playerTwoEarnedCards, points);
     }
 
     private void SwapPlayerTurn()
@@ -84,16 +118,93 @@ public class EscobaGame
                 break;
         }
     }
+    
 
+    private void AsignPlayersPoints()
+    {
+  
+        CheckForSevenGoldCard();
+        CheckForTheMostSevensEarned();
+        CheckForTheMostNumberOfCardsEarned();
+        CheckForTheMostGoldCardsEarned();
+
+    }
+    private void CheckForTheMostSevensEarned()
+    {
+        var playerOneEarnedCardsCount = Board.PlayerOne.GetNumberOfCardWithSevenEarned();
+        var playerTwoEarnedCardsCount = Board.PlayerTwo.GetNumberOfCardWithSevenEarned();
+        CheckForNumberOfCardsEarned(playerOneEarnedCardsCount,playerTwoEarnedCardsCount);
+    }
+    private void CheckForTheMostGoldCardsEarned()
+    {
+        var playerOneEarnedCardsCount = Board.PlayerOne.GetNumberOfGoldCardsEarned();
+        var playerTwoEarnedCardsCount = Board.PlayerTwo.GetNumberOfGoldCardsEarned();
+        CheckForNumberOfCardsEarned(playerOneEarnedCardsCount,playerTwoEarnedCardsCount);
+    }
+
+    private void CheckForTheMostNumberOfCardsEarned()
+    {
+        var playerOneEarnedCardsCount = Board.PlayerOne.GetNumberOfCardsEarned();
+        var playerTwoEarnedCardsCount = Board.PlayerTwo.GetNumberOfCardsEarned();
+        CheckForNumberOfCardsEarned(playerOneEarnedCardsCount,playerTwoEarnedCardsCount);
+    }
+    private void CheckForNumberOfCardsEarned(int playerOneNumberOfCards,int playerTwoNumberOfCards)
+    {
+        var differenceInNumberOfCards = playerOneNumberOfCards -playerTwoNumberOfCards;
+        switch (differenceInNumberOfCards)
+        {
+            case 0:
+                Board.PlayerOne.AddAPoint();
+                Board.PlayerTwo.AddAPoint();
+                break;
+            case > 0:
+                Board.PlayerOne.AddAPoint();
+                break;
+            default:
+                Board.PlayerTwo.AddAPoint();
+                break;
+        }
+        
+    }
+
+    private void CheckForSevenGoldCard()
+    {
+        if (Board.PlayerOne.CheckForTheSevenGoldCard())
+        {
+            Board.PlayerOne.AddAPoint();
+        }
+        else if(Board.PlayerTwo.CheckForTheSevenGoldCard())
+        {
+            Board.PlayerTwo.AddAPoint();
+        }  
+    }
     private void MakingAPlay(List<Card> cards)
     {
+        LastPlayerThatMakeAPlay = CurrentPlayer;
         foreach (var card in cards)
         {
             Board.RemoveCard(card);
         }
         CurrentPlayer.AddEarnedCards(cards);
         Messages.CardWon(CurrentPlayer.ToString(),ListOfCardsToString(cards));
-        if (Board.CardsOnTable.Count == 0)Messages.Escoba(CurrentPlayer.ToString());
+        if (Board.CardsOnTable.Count == 0)Escoba();
+    }
+
+    private void PlayerGetBoardCards()
+    {
+        var endTurnEarnedCards = new List<Card>(Board.CardsOnTable);
+        foreach (var card in endTurnEarnedCards)
+        {
+            Board.RemoveCard(card);
+            
+        }
+        LastPlayerThatMakeAPlay.AddEarnedCards(endTurnEarnedCards);
+    }
+
+    private void Escoba()
+    {
+        CurrentPlayer.AddAPoint();
+        Messages.Escoba(CurrentPlayer.ToString());
     }
 
     private List<string> ListOfCardsToString(List<Card> possiblePlay)
@@ -107,9 +218,10 @@ public class EscobaGame
     }
     private void ShowPlayerPossiblePlays(List<List<Card>> possiblePlays)
     {
+        LastPlayerThatMakeAPlay = CurrentPlayer;
         Messages.ShowPlays(ListOfPlaysToString(possiblePlays));
-        var playerInput = Convert.ToInt32(Console.ReadLine());
-        MakingAPlay(possiblePlays[playerInput-1]);
+        var playerInput = GetPlayerInput();
+        MakingAPlay(possiblePlays[playerInput]);
     }
 
     private void ShowPlayerOptionToPlay()

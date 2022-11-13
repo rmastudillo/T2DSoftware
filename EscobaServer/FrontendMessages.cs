@@ -48,7 +48,7 @@ public class Messages
         ListMessagePrinter(message);
     }
 
-    public void HandStats(List<string> cardsWonPlayer1, List<string> cardsWonPlayer2)
+    public void EndTurnReport(List<string> cardsWonPlayer1, List<string> cardsWonPlayer2, List<int> points)
     {
         Console.Write("-----------------------------------\nCartas ganadas en esta ronda");
         var cards1 = string.Join(", ", cardsWonPlayer1);
@@ -58,8 +58,8 @@ public class Messages
         Console.Write("\n    Jugador 1: ");
         Console.Write(cards2);
         Console.Write("\n-----------------------------------\nTotal puntos ganados");
-        Console.Write("\n    Jugador 0: 1");
-        Console.Write("\n    Jugador 1: 2");
+        Console.Write($"\n    Jugador 0: {points[0]}");
+        Console.Write($"\n    Jugador 1: {points[1]}");
         Console.Write("\n-----------------------------------\n");
     }
 
