@@ -27,8 +27,8 @@ public class Messages
         var mainMenuMessage = new List<string>(new[]
         {
             "¿Que quieres hacer?\n",
-            "[1] Salir\n",
-            "[2] Nuevo juego\n"
+            "[1] Jugar en local\n",
+            "[2] Jugar mediante sockets\n"
         });
         ListMessagePrinter(mainMenuMessage);
         InputMessage(2);

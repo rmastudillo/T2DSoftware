@@ -5,7 +5,7 @@ public class EscobaGame
 {
     public Board Board { get; set; }
     private bool Playing = true;
-    private Messages Messages = new Messages();
+    public Messages Messages = new Messages();
     public Player CurrentPlayer { get; set; }
     private Player LastPlayerThatMakeAPlay { get; set; }
 
@@ -77,16 +77,14 @@ public class EscobaGame
         var differenceOfPoints = playerOnePoints - playerTwoPoints;
         switch (differenceOfPoints)
         {
-            case > 0:
-            {
-                winnerMessage.Add($"Ganó el {Board.PlayerOne.ToString()} con {playerOnePoints} puntos.");
-                break;
-            }
-            case < 0:
-                winnerMessage.Add($"Ganó el {Board.PlayerTwo.ToString()} con {playerTwoPoints} puntos.");
-                break;
             case 0:
                 winnerMessage.Add($"Empate con {playerOnePoints} puntos.");
+                break;
+            case > 0:
+                winnerMessage.Add($"Ganó el {Board.PlayerOne.ToString()} con {playerOnePoints} puntos.");
+                break;
+            case < 0:
+                winnerMessage.Add($"Ganó el {Board.PlayerTwo.ToString()} con {playerTwoPoints} puntos.");
                 break;
         }
         Messages.EndGameMessage(winnerMessage);
