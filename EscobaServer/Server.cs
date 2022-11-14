@@ -51,6 +51,7 @@ public class Server
     private void SetClientsToMessage()
     {
         Game.Messages.SetClients(FirstClient,SecondClient);
+        Game.NewHand();
     }
     private void ThreadProc(object obj)
         {
@@ -63,20 +64,6 @@ public class Server
             var mensaje = reader.ReadLine();
             while (mensaje != "Salir")
             {
-                if (Game.Playing)
-                {
-                   Game.NewHand();
-                }
-                Console.WriteLine($"El cliente {param[1]} dice: " + mensaje);
-                var message = new List<string>(new[]
-                {
-                    "########################################\n",
-                    "#   Bienvenido al juego de la escoba   #\n",
-                    "########################################\n",
-                    "Code:input"
-                });
-                var consolidateMessage = string.Join("", message);
-                SendMessage(writer,consolidateMessage);
                 mensaje = reader.ReadLine();
             }
             NumOfConnectedPlayers -= 1;

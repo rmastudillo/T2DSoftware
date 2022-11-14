@@ -36,10 +36,10 @@ public class GameNotifications
         var points = new List<int>() { playerOne.GetEarnedPoints(), playerTwo.GetEarnedPoints() };
         Messages.EndTurnReport(playerOneEarnedCards, playerTwoEarnedCards, points);
     }
-    public void ShowPlayerPossiblePlays(List<List<Card>> possiblePlays)
+    public int ShowPlayerPossiblePlays(List<List<Card>> possiblePlays)
     {
         Messages.ShowPlays(Helper.ListOfPlaysToString(possiblePlays));
-        Helper.GetPlayerInput(Helper.ListOfPlaysToString(possiblePlays).Count);
+        return Helper.GetPlayerInput(Helper.ListOfPlaysToString(possiblePlays).Count);
     }
     public void ShowPlayerOptionToPlay(Player CurrentPlayer, Board Board)
     {

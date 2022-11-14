@@ -97,8 +97,8 @@ public class EscobaGame
                 MakingAPlay(possiblePlays[0]);
                 break;
             case > 1:
-                GameNotifications.ShowPlayerPossiblePlays(possiblePlays);
-                MakingAPlay(possiblePlays[playerInput]);
+                var playerPlay = GameNotifications.ShowPlayerPossiblePlays(possiblePlays);
+                MakingAPlay(possiblePlays[playerPlay]);
                 break;
         }
     }

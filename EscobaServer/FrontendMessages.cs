@@ -6,6 +6,7 @@ public class Messages
     {
         Clients.Add(firstClient);
         Clients.Add(secondClient);
+        WelcomeMessage();
     }
 
 
