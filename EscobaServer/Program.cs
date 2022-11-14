@@ -7,7 +7,7 @@ var Messages = new Messages();
 var playerOne = new Player(0);
 var playerTwo = new Player(1);
 var game = new EscobaGame(playerOne,playerTwo);
-game.NewHand();
+//game.NewHand();
 game.Messages.MainMenu();
 var serverMessage = Console.ReadLine();
 if (serverMessage == "2")

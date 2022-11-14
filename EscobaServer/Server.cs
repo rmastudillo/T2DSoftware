@@ -28,13 +28,10 @@ public class Server
                 {
                     "########################################\n",
                     "#   Bienvenido al juego de la escoba   #\n",
-                    "input\n",
                     "########################################\n"
                 });
                 var consolidateMessage = string.Join("", message);
-                writer.WriteLine(consolidateMessage);
-                writer.WriteLine(mensaje);
-                writer.Flush();
+                SendMessage(writer,consolidateMessage);
                 mensaje = reader.ReadLine();
             }
             NumOfConnectedPlayers -= 1;
@@ -65,7 +62,6 @@ public class Server
                     Listening = false;
                 }
             }
-
             if (!State)
             {
                 Listener.Stop();

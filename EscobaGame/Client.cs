@@ -8,14 +8,15 @@ public class Client
 {
     private StreamWriter Writer { get; set; }
     private StreamReader Reader { get; set; }
-    private TcpClient ClientConnection = new TcpClient();
-    private bool WriteMode = false;
+    private TcpClient _clientConnection = new TcpClient();
+    private bool _writeMode = false;
+    private bool _playing = true;
     
     public Client()
     {
-        ClientConnection.Connect(IPAddress.Loopback, 8000);
+        _clientConnection.Connect(IPAddress.Loopback, 8000);
         Console.Write($"Conectado!\n");
-        var networkStream = ClientConnection.GetStream();
+        var networkStream = _clientConnection.GetStream();
         Writer = new StreamWriter(networkStream);
         Reader = new StreamReader(networkStream);
     }
@@ -23,37 +24,42 @@ public class Client
     private void ShowServerMessages(TextReader reader)
     {
         var response = reader.ReadLine();
-        while (response is not( "" or "input\n"))
+        while (response!="")
         {
             Console.WriteLine(response);
             response = reader.ReadLine();
         }
-
-        if (response is "input\n")
+        switch (response)
         {
-            Console.WriteLine("ASDSAAAAAAAAAAAAAAAAA");
-            WriteMode = true;
+            case "Code:input":
+                _writeMode = true;
+                break;
+            case "Code:end":
+                _playing = false;
+                break;
         }
     }
 
+    private void SendMessage(string message)
+    {
+        Writer.WriteLine(message);
+        Writer.Flush();
+    }
     public void StartConnection()
     {
-        Console.WriteLine("¿Que quieres hacer?\n[1] Enviar mensaje\n[2] Salir\n");
-        var opcion = Console.ReadLine();
-        while (opcion != "2")
+        Console.WriteLine("Conexión establecida correctamente\nIniciando el juego\n\n");
+        while (_playing)
         {
-            Console.WriteLine("Escribe el mensaje a enviar:");
-            Writer.WriteLine(Console.ReadLine());
-            Writer.Flush();
+            SendMessage("¿Que quieres hacer?\n[1] Enviar mensaje\n[2] Salir\n");
             ShowServerMessages(Reader);
-            if (WriteMode)
+            if (_writeMode)
             {
-                Console.WriteLine("¿Que quieres hacer?\n[1] Enviar mensaje\n[2] Salir\n");
-                opcion = Console.ReadLine();
+                SendMessage("¿Que quieres hacer?\n[1] Enviar mensaje\n[2] Salir\n");
+                _writeMode = false;
             }
         }
         Writer.WriteLine("Salir");
         Writer.Flush();
-        ClientConnection.Close();
+        _clientConnection.Close();
     }
 }
