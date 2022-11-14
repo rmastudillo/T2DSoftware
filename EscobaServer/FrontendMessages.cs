@@ -1,10 +1,29 @@
 namespace EscobaServer;
 public class Messages
 {
-    private static void ListMessagePrinter(IEnumerable<string> listMessage, string spliter = "")
+    public List<Client> Clients = new();
+    public void SetClients(Client firstClient,Client secondClient)
+    {
+        Clients.Add(firstClient);
+        Clients.Add(secondClient);
+    }
+
+
+    public void SendMessage( StreamWriter writer,string message)
+    {
+        writer.WriteLine(message);
+        writer.Flush();
+    }
+    private  void ListMessagePrinter(IEnumerable<string> listMessage, string spliter = "")
     {
         var consolidateMessage = string.Join(spliter, listMessage);
         Console.Write(consolidateMessage);
+
+        foreach (var client in Clients)
+        {
+            SendMessage(client.ClientWriter,consolidateMessage);
+        }
+
     }
 
     public void WelcomeMessage()

@@ -2,13 +2,14 @@ using static System.Int32;
 namespace EscobaServer;
 public class EscobaGame
 {
+    public bool PlayingOnline = false;
     public Board Board { get; set; }
-    private bool Playing = true;
+    public bool Playing = true;
     public Messages Messages = new Messages();
     public GameNotifications GameNotifications = new GameNotifications();
     public Helper Helper = new Helper();
     public Player CurrentPlayer { get; set; }
-    private Player LastPlayerThatMakeAPlay { get; set; }
+    private Player _lastPlayerThatMakeAPlay = new Player(0);
 
     public EscobaGame(Player player0, Player player1)
     {
@@ -158,7 +159,7 @@ public class EscobaGame
     }
     private void MakingAPlay(List<Card> cards)
     {
-        LastPlayerThatMakeAPlay = CurrentPlayer;
+        _lastPlayerThatMakeAPlay = CurrentPlayer;
         foreach (var card in cards)
         {
             Board.RemoveCard(card);
@@ -174,7 +175,7 @@ public class EscobaGame
         {
             Board.RemoveCard(card);
         }
-        LastPlayerThatMakeAPlay.AddEarnedCards(endTurnEarnedCards);
+        _lastPlayerThatMakeAPlay.AddEarnedCards(endTurnEarnedCards);
     }
     private void Escoba()
     {

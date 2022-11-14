@@ -1,17 +1,56 @@
+using System.Threading.Tasks.Dataflow;
+
 namespace EscobaServer;
 using System.Net;
 using System.Net.Sockets;
+
+public class Client
+{
+    public StreamReader ClientReader { get; }
+    public  StreamWriter ClientWriter { get; }
+    public Client(StreamReader clientReader, StreamWriter clientWriter)
+    {
+        ClientReader = clientReader;
+        ClientWriter = clientWriter;
+    }
+}
 public class Server
 {
     private int NumOfConnectedPlayers = 0;
     private bool Listening = true;
     private bool State = true;
     private TcpListener Listener = new(IPAddress.Any, 8000);
-
+    public  Client FirstClient { get; set; }
+    public  Client SecondClient { get; set; }
+    private EscobaGame Game { get; }
     public void SendMessage( StreamWriter writer,string message)
     {
         writer.WriteLine(message);
         writer.Flush();
+    }
+
+    public Server(EscobaGame game)
+    {
+        Game = game;
+    }
+    private void SetClient(string? clientNumber, StreamReader clientReader, StreamWriter clientWriter)
+    {
+            switch (clientNumber)
+            {
+                case "0":
+                    FirstClient = new Client(clientReader, clientWriter);
+                    break;
+                case "1":
+                    SecondClient = new Client(clientReader, clientWriter);
+                    SetClientsToMessage();
+                    Game.Playing = true;
+                    break;
+            }
+    }
+
+    private void SetClientsToMessage()
+    {
+        Game.Messages.SetClients(FirstClient,SecondClient);
     }
     private void ThreadProc(object obj)
         {
@@ -20,15 +59,21 @@ public class Server
             NetworkStream ns = client.GetStream();
             StreamReader reader = new StreamReader(ns);
             StreamWriter writer = new StreamWriter(ns);
+            SetClient(param[1].ToString(), reader, writer);
             var mensaje = reader.ReadLine();
             while (mensaje != "Salir")
             {
+                if (Game.Playing)
+                {
+                   Game.NewHand();
+                }
                 Console.WriteLine($"El cliente {param[1]} dice: " + mensaje);
                 var message = new List<string>(new[]
                 {
                     "########################################\n",
                     "#   Bienvenido al juego de la escoba   #\n",
-                    "########################################\n"
+                    "########################################\n",
+                    "Code:input"
                 });
                 var consolidateMessage = string.Join("", message);
                 SendMessage(writer,consolidateMessage);
@@ -53,9 +98,9 @@ public class Server
             if (Listening)
             {
                 Console.Write("Esperando por una conexión...\n");
-                TcpClient tc = Listener.AcceptTcpClient();
+                TcpClient tcpClientManager = Listener.AcceptTcpClient();
                 Console.Write($"Cliente {NumOfConnectedPlayers + 1} Conectado!\n");
-                ThreadPool.QueueUserWorkItem(ThreadProc, new object[] { tc, NumOfConnectedPlayers });
+                ThreadPool.QueueUserWorkItem(ThreadProc, new object[] { tcpClientManager, NumOfConnectedPlayers });
                 NumOfConnectedPlayers += 1;
                 if (NumOfConnectedPlayers == 2)
                 {

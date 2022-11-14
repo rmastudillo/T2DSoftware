@@ -1,3 +1,5 @@
+using System.Net.Security;
+
 namespace Escoba;
 using System.Net.Sockets;
 using System;
@@ -24,7 +26,7 @@ public class Client
     private void ShowServerMessages(TextReader reader)
     {
         var response = reader.ReadLine();
-        while (response!="")
+        while (response!="" && !response.Contains("Code:"))
         {
             Console.WriteLine(response);
             response = reader.ReadLine();
@@ -48,12 +50,14 @@ public class Client
     public void StartConnection()
     {
         Console.WriteLine("Conexión establecida correctamente\nIniciando el juego\n\n");
+        SendMessage("Hello There");
         while (_playing)
         {
-            SendMessage("¿Que quieres hacer?\n[1] Enviar mensaje\n[2] Salir\n");
+            
             ShowServerMessages(Reader);
             if (_writeMode)
             {
+                var asdas = Console.ReadLine();
                 SendMessage("¿Que quieres hacer?\n[1] Enviar mensaje\n[2] Salir\n");
                 _writeMode = false;
             }
