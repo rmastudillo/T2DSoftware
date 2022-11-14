@@ -2,18 +2,20 @@ using static System.Int32;
 namespace EscobaServer;
 public class EscobaGame
 {
-    public bool PlayingOnline = false;
     public Board Board { get; set; }
+    public GameNotifications GameNotifications { get; }
+    public Helper Helper { get; }
+    public Player CurrentPlayer { get; set; }
     public bool Playing = true;
     public Messages Messages = new Messages();
-    public GameNotifications GameNotifications = new GameNotifications();
-    public Helper Helper = new Helper();
-    public Player CurrentPlayer { get; set; }
+    public bool PlayingOnline = false;
     private Player _lastPlayerThatMakeAPlay = new Player(0);
 
     public EscobaGame(Player player0, Player player1)
     {
         Board = new Board(player0, player1);
+        GameNotifications = new GameNotifications(Messages);
+        Helper = new Helper(Messages);
         CurrentPlayer = Board.PlayerOne;
     }
 
@@ -76,7 +78,9 @@ public class EscobaGame
     }
     private void SwapPlayerTurn()
     {
+        
         CurrentPlayer = (CurrentPlayer == Board.PlayerOne) ? Board.PlayerTwo : Board.PlayerOne;
+        Messages.ChangeCurrentPlayer(CurrentPlayer.ToString());
     }
     private void PlayerTurn()
     {
@@ -97,7 +101,7 @@ public class EscobaGame
                 MakingAPlay(possiblePlays[0]);
                 break;
             case > 1:
-                var playerPlay = GameNotifications.ShowPlayerPossiblePlays(possiblePlays);
+                var playerPlay = GameNotifications.ShowPlayerPossiblePlays(possiblePlays,CurrentPlayer.ToString());
                 MakingAPlay(possiblePlays[playerPlay]);
                 break;
         }

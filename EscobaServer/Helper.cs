@@ -1,9 +1,15 @@
+using System.Net.Sockets;
 using static System.Int32;
 namespace EscobaServer;
 public class Helper
 {
-    public Messages Messages = new Messages();
+    public Messages Messages { get; }
+    public bool PlayingOnline = true;
 
+    public Helper(Messages messages)
+    {
+        Messages = messages;
+    }
     public List<List<string>> ListOfPlaysToString(List<List<Card>> possiblePlays)
     {
         return possiblePlays.Select(ListOfCardsToString).ToList();
@@ -46,8 +52,34 @@ public class Helper
             }
         }
     }
+
+    private int GetPlayerInputOnline(int maxInputValue)
+    {
+        var inputCodeString = new List<string>(){"Code:input"};
+        var inputIsInt = false;
+        var waitingNewMsg = true;
+        var clientMesage = "";
+        var playerValidInput = 1;
+        while (!inputIsInt)
+        {
+            Messages.SendSpecificMessageToClient(inputCodeString,Messages.CurrentPlayerName);
+            while (waitingNewMsg)
+            {
+                clientMesage = Messages.GetClientMsg(Messages.Clients[Messages.CurrentPlayerName]);
+                waitingNewMsg = false;
+            }
+            inputIsInt = TryParse(clientMesage, out  playerValidInput);
+
+        }
+        return playerValidInput;
+    }
     public int GetPlayerInput(int maxInputValue)
     {
+        if (PlayingOnline)
+        {
+            var playerValidInputOnline = GetPlayerInputOnline(maxInputValue);
+            return playerValidInputOnline - 1;
+        }
         var inputIsInt = TryParse(Console.ReadLine(), out var playerValidInput);
         while (!inputIsInt || (playerValidInput < 1) || (playerValidInput > maxInputValue))
         {

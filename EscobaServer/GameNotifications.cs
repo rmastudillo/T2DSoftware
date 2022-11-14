@@ -1,13 +1,18 @@
-using static System.Int32;
 namespace EscobaServer;
 public class GameNotifications
 {
-    public Messages Messages = new Messages();
-    public Helper Helper = new Helper();
+    public Messages Messages { get; }
+    public Helper Helper { get; }
 
     public void StartGame()
     {
         Messages.WelcomeMessage();
+    }
+
+    public GameNotifications(Messages messages)
+    {
+        Messages = messages;
+        Helper = new Helper(messages);
     }
     public void AnnounceWinner(Player playerOne, Player playerTwo)
     {
@@ -36,16 +41,16 @@ public class GameNotifications
         var points = new List<int>() { playerOne.GetEarnedPoints(), playerTwo.GetEarnedPoints() };
         Messages.EndTurnReport(playerOneEarnedCards, playerTwoEarnedCards, points);
     }
-    public int ShowPlayerPossiblePlays(List<List<Card>> possiblePlays)
+    public int ShowPlayerPossiblePlays(List<List<Card>> possiblePlays, string playerName)
     {
         Messages.ShowPlays(Helper.ListOfPlaysToString(possiblePlays));
         return Helper.GetPlayerInput(Helper.ListOfPlaysToString(possiblePlays).Count);
     }
-    public void ShowPlayerOptionToPlay(Player CurrentPlayer, Board Board)
+    public void ShowPlayerOptionToPlay(Player currentPlayer, Board board)
     {
-        var playerName = CurrentPlayer.ToString();
-        var hand = CurrentPlayer.PlayerHandToString();
-        var cardsOnTable = Board.CardsOnTableToString();
+        var playerName = currentPlayer.ToString();
+        var hand = currentPlayer.PlayerHandToString();
+        var cardsOnTable = board.CardsOnTableToString();
         Messages.MainTurn(playerName, hand, cardsOnTable);
     }
 }

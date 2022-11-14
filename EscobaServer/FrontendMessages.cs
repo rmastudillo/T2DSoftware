@@ -1,16 +1,35 @@
+using System.Diagnostics;
+
 namespace EscobaServer;
 public class Messages
 {
-    public List<Client> Clients = new();
+    public Dictionary<string,Client> Clients = new();
+    public string CurrentPlayerName = "Jugador 0";
     public void SetClients(Client firstClient,Client secondClient)
     {
-        Clients.Add(firstClient);
-        Clients.Add(secondClient);
+        Clients.Add("Jugador 0",firstClient);
+        Clients.Add("Jugador 1",secondClient);
     }
 
+    public void ChangeCurrentPlayer(string currentPlayerName)
+    {
+        CurrentPlayerName = currentPlayerName;
+    }
 
+    public string GetClientMsg(Client client)
+    {
+        Console.WriteLine($"Esperando el mensaje de {CurrentPlayerName}");
+        var response = "";
+        while (string.IsNullOrEmpty(response))
+        {
+            response = client.ClientReader.ReadLine();
+            SendMessage(client.ClientWriter,"Code:correct");
+        }
+        return response;
+    }
     public void SendMessage( StreamWriter writer,string message)
     {
+        writer.Flush();
         writer.WriteLine(message);
         writer.Flush();
     }
@@ -20,7 +39,7 @@ public class Messages
         Console.Write(consolidateMessage);
     }
 
-    private void SendSpecificMessageToClient(IEnumerable<string> listMessage, string clientName, string spliter = "")
+    public void SendSpecificMessageToClient(IEnumerable<string> listMessage, string clientName, string spliter = "")
     {
         var waitingMessage = $"Espera a que el jugador {clientName} haga su jugada\n";
         var consolidateMessage = string.Join(spliter, listMessage);
@@ -28,17 +47,17 @@ public class Messages
         switch (clientName)
         {
             case "Jugador 0":
-                SendMessage(Clients[0].ClientWriter, consolidateMessage);
-                SendMessage(Clients[1].ClientWriter, waitingMessage);
+                SendMessage(Clients["Jugador 0"].ClientWriter, consolidateMessage);
+                SendMessage(Clients["Jugador 1"].ClientWriter, waitingMessage);
                 break;
             case "Jugador 1":
-                SendMessage(Clients[0].ClientWriter, waitingMessage);
-                SendMessage(Clients[1].ClientWriter, consolidateMessage);
+                SendMessage(Clients["Jugador 0"].ClientWriter, waitingMessage);
+                SendMessage(Clients["Jugador 1"].ClientWriter, consolidateMessage);
                 break;
             case "Ambos":
             {
-                SendMessage(Clients[0].ClientWriter, consolidateMessage);
-                SendMessage(Clients[1].ClientWriter, consolidateMessage);
+                SendMessage(Clients["Jugador 0"].ClientWriter, consolidateMessage);
+                SendMessage(Clients["Jugador 1"].ClientWriter, consolidateMessage);
                 break;
             }
         }
@@ -173,11 +192,20 @@ public class Messages
         var listMessage = boardCopy.ToList();
         ListMessagePrinter(listMessage, ", ");
         SendSpecificMessageToClient(listMessage, "Ambos",", ");
-        Console.Write("\nMano jugador: ");
+        var handTitleMessage = new List<string>(){"\nMano jugador: "};
+        ListMessagePrinter(handTitleMessage);
+        SendSpecificMessageToClient(handTitleMessage, playerName);
         var playerHandCopy = AddIndexToListString(playerHand);
         ListMessagePrinter(playerHandCopy, ", ");
-        Console.WriteLine("\n¿Qué carta quieres bajar?");
-        InputMessage(playerHand.Count);
+        var inputCardMessage = new List<string>(){"\n¿Qué carta quieres bajar?\n"};
+        ListMessagePrinter(inputCardMessage);
+        SendSpecificMessageToClient(inputCardMessage, playerName);
+        var maxInputMessage = new List<string>(new[]
+        {
+            $"Ingresa un número entre 1 y {playerHand.Count}:\n"
+        });
+        ListMessagePrinter(maxInputMessage);
+        SendSpecificMessageToClient(maxInputMessage, playerName);
     }
 
     public void InvalidInput()

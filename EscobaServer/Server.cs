@@ -39,6 +39,7 @@ public class Server
             {
                 case "0":
                     FirstClient = new Client(clientReader, clientWriter);
+                    FirstClient.ClientWriter.Flush();
                     break;
                 case "1":
                     SecondClient = new Client(clientReader, clientWriter);
@@ -51,8 +52,7 @@ public class Server
     private void SetClientsToMessage()
     {
         Game.Messages.SetClients(FirstClient,SecondClient);
-        Game.GameNotifications.Messages.SetClients(FirstClient, SecondClient);
-        Game.Helper.Messages.SetClients(FirstClient, SecondClient);
+        Game.PlayingOnline = true;
         Game.NewHand();
     }
     private void ThreadProc(object obj)
@@ -62,12 +62,14 @@ public class Server
             NetworkStream ns = client.GetStream();
             StreamReader reader = new StreamReader(ns);
             StreamWriter writer = new StreamWriter(ns);
-            SetClient(param[1].ToString(), reader, writer);
-            var mensaje = reader.ReadLine();
-            while (mensaje != "Salir")
+            var first = reader.ReadLine();
+            if (first == "Code:sucess")
             {
-                mensaje = reader.ReadLine();
+                Console.WriteLine("Conexión con el jugador correcta");
             }
+
+            SetClient(param[1].ToString(), reader, writer);
+            Console.ReadLine();
             NumOfConnectedPlayers -= 1;
             Console.Write("Un cliente abandonó el servidor :(\n");
             client.Close(); // cerramos la conexio ́n

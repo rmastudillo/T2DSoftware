@@ -39,27 +39,39 @@ public class Client
             case "Code:end":
                 _playing = false;
                 break;
+            case "Code:correct":
+                Console.WriteLine("El mensaje fue recibido correctamente");
+                _writeMode = false;
+                break;
         }
+   
     }
 
     private void SendMessage(string message)
     {
-        Writer.WriteLine(message);
+  
+        Console.WriteLine($"Enviando{message}");
+        Writer.WriteLineAsync(message);
         Writer.Flush();
+        Console.WriteLine($"-{message}- Enviado");
+        //ShowServerMessages(Reader);
     }
     public void StartConnection()
     {
         Console.WriteLine("Conexión establecida correctamente\nIniciando el juego\n\n");
-        SendMessage("Hello There");
+        Writer.WriteLine("Code:sucess");
+        Writer.Flush();
         while (_playing)
         {
-            
             ShowServerMessages(Reader);
             if (_writeMode)
             {
-                var asdas = Console.ReadLine();
-                SendMessage("¿Que quieres hacer?\n[1] Enviar mensaje\n[2] Salir\n");
-                _writeMode = false;
+                var msg = Console.ReadLine();
+                if (!string.IsNullOrEmpty(msg))
+                {
+                    SendMessage($"{msg}");
+                    _writeMode = false;
+                }
             }
         }
         Writer.WriteLine("Salir");
