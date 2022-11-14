@@ -6,7 +6,6 @@ public class Messages
     {
         Clients.Add(firstClient);
         Clients.Add(secondClient);
-        WelcomeMessage();
     }
 
 
@@ -15,18 +14,35 @@ public class Messages
         writer.WriteLine(message);
         writer.Flush();
     }
-    private  void ListMessagePrinter(IEnumerable<string> listMessage, string spliter = "")
+    private  void ListMessagePrinter(IEnumerable<string> listMessage, string spliter="")
     {
         var consolidateMessage = string.Join(spliter, listMessage);
         Console.Write(consolidateMessage);
-
-        foreach (var client in Clients)
-        {
-            SendMessage(client.ClientWriter,consolidateMessage);
-        }
-
     }
 
+    private void SendSpecificMessageToClient(IEnumerable<string> listMessage, string clientName, string spliter = "")
+    {
+        var waitingMessage = $"Espera a que el jugador {clientName} haga su jugada\n";
+        var consolidateMessage = string.Join(spliter, listMessage);
+        if (Clients.Count < 2) return;
+        switch (clientName)
+        {
+            case "Jugador 0":
+                SendMessage(Clients[0].ClientWriter, consolidateMessage);
+                SendMessage(Clients[1].ClientWriter, waitingMessage);
+                break;
+            case "Jugador 1":
+                SendMessage(Clients[0].ClientWriter, waitingMessage);
+                SendMessage(Clients[1].ClientWriter, consolidateMessage);
+                break;
+            case "Ambos":
+            {
+                SendMessage(Clients[0].ClientWriter, consolidateMessage);
+                SendMessage(Clients[1].ClientWriter, consolidateMessage);
+                break;
+            }
+        }
+    }
     public void WelcomeMessage()
     {
         var message = new List<string>(new[]
@@ -36,10 +52,12 @@ public class Messages
                 "########################################\n"
             });
         ListMessagePrinter(message);
+        SendSpecificMessageToClient(message, "Ambos");
     }
     public void EndGameMessage(List<string> message)
     {
         ListMessagePrinter(message);
+        SendSpecificMessageToClient(message, "Ambos");
     }
 
     public void MainMenu()
@@ -62,6 +80,7 @@ public class Messages
             $"\n>>> Reparte el {player}! <<<\n",
         });
         ListMessagePrinter(message);
+        SendSpecificMessageToClient(message, "Ambos");
     }
 
     public void Escoba(string playeName)
@@ -71,21 +90,28 @@ public class Messages
             $"ESCOBA ! **************************************************  JUGADOR {playeName}\n",
         });
         ListMessagePrinter(message);
+        SendSpecificMessageToClient(message, "Ambos");
     }
 
     public void EndTurnReport(List<string> cardsWonPlayer1, List<string> cardsWonPlayer2, List<int> points)
     {
-        Console.Write("-----------------------------------\nCartas ganadas en esta ronda");
+        
         var cards1 = string.Join(", ", cardsWonPlayer1);
         var cards2 = string.Join(", ", cardsWonPlayer2);
-        Console.Write("\n    Jugador 0: ");
-        Console.Write(cards1);
-        Console.Write("\n    Jugador 1: ");
-        Console.Write(cards2);
-        Console.Write("\n-----------------------------------\nTotal puntos ganados");
-        Console.Write($"\n    Jugador 0: {points[0]}");
-        Console.Write($"\n    Jugador 1: {points[1]}");
-        Console.Write("\n-----------------------------------\n");
+        var message = new List<string>(new[]
+        {
+            "-----------------------------------\n",
+            "Cartas ganadas en esta ronda\n",
+            $"    Jugador 0: {cards1}\n",
+            $"    Jugador 1: {cards2}\n",
+            "-----------------------------------\n",
+            "Total puntos ganados\n",
+            $"    Jugador 0: {points[0]}\n",
+            $"    Jugador 1: {points[1]}\n",
+            "-----------------------------------\n"
+        });
+        ListMessagePrinter(message);
+        SendSpecificMessageToClient(message, "Ambos");
     }
 
     private void AddOptionToPlay(int numerOfOption,List<string> play)
@@ -112,6 +138,7 @@ public class Messages
             $"{playername} se lleva las siguientes cartas: {cards}\n"
         });
         ListMessagePrinter(message);
+        SendSpecificMessageToClient(message, "Ambos");
     }
 
     private void InputMessage(int maxOption)
@@ -141,8 +168,11 @@ public class Messages
             "Mesa actual: "
         });
         ListMessagePrinter(mainMenuMessage);
+        SendSpecificMessageToClient(mainMenuMessage, "Ambos");
         var boardCopy = AddIndexToListString(currentBoard);
-        ListMessagePrinter(boardCopy, ", ");
+        var listMessage = boardCopy.ToList();
+        ListMessagePrinter(listMessage, ", ");
+        SendSpecificMessageToClient(listMessage, "Ambos",", ");
         Console.Write("\nMano jugador: ");
         var playerHandCopy = AddIndexToListString(playerHand);
         ListMessagePrinter(playerHandCopy, ", ");

@@ -2,7 +2,7 @@ using static System.Int32;
 namespace EscobaServer;
 public class Helper
 {
-    private Messages Messages = new Messages();
+    public Messages Messages = new Messages();
 
     public List<List<string>> ListOfPlaysToString(List<List<Card>> possiblePlays)
     {

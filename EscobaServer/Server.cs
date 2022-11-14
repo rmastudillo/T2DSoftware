@@ -51,6 +51,8 @@ public class Server
     private void SetClientsToMessage()
     {
         Game.Messages.SetClients(FirstClient,SecondClient);
+        Game.GameNotifications.Messages.SetClients(FirstClient, SecondClient);
+        Game.Helper.Messages.SetClients(FirstClient, SecondClient);
         Game.NewHand();
     }
     private void ThreadProc(object obj)
