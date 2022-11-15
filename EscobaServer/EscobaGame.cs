@@ -78,7 +78,7 @@ public class EscobaGame
     }
     private void SwapPlayerTurn()
     {
-        
+
         CurrentPlayer = (CurrentPlayer == Board.PlayerOne) ? Board.PlayerTwo : Board.PlayerOne;
         Messages.ChangeCurrentPlayer(CurrentPlayer.ToString());
     }
@@ -101,7 +101,7 @@ public class EscobaGame
                 MakingAPlay(possiblePlays[0]);
                 break;
             case > 1:
-                var playerPlay = GameNotifications.ShowPlayerPossiblePlays(possiblePlays,CurrentPlayer.ToString());
+                var playerPlay = GameNotifications.ShowPlayerPossiblePlays(possiblePlays, CurrentPlayer.ToString());
                 MakingAPlay(possiblePlays[playerPlay]);
                 break;
         }

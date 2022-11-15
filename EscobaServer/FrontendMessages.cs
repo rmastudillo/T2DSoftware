@@ -13,6 +13,8 @@ public class Messages
 
     public void ChangeCurrentPlayer(string currentPlayerName)
     {
+        var waitingMessage = $"Espera a que el {currentPlayerName} haga su jugada\n";
+        SendMessage(Clients[currentPlayerName].ClientWriter, waitingMessage);
         CurrentPlayerName = currentPlayerName;
     }
 
@@ -41,17 +43,14 @@ public class Messages
 
     public void SendSpecificMessageToClient(IEnumerable<string> listMessage, string clientName, string spliter = "")
     {
-        var waitingMessage = $"Espera a que el jugador {clientName} haga su jugada\n";
         var consolidateMessage = string.Join(spliter, listMessage);
         if (Clients.Count < 2) return;
         switch (clientName)
         {
             case "Jugador 0":
                 SendMessage(Clients["Jugador 0"].ClientWriter, consolidateMessage);
-                SendMessage(Clients["Jugador 1"].ClientWriter, waitingMessage);
                 break;
             case "Jugador 1":
-                SendMessage(Clients["Jugador 0"].ClientWriter, waitingMessage);
                 SendMessage(Clients["Jugador 1"].ClientWriter, consolidateMessage);
                 break;
             case "Ambos":
