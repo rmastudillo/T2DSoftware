@@ -43,16 +43,16 @@ public class Server
                     break;
                 case "1":
                     SecondClient = new Client(clientReader, clientWriter);
-                    SetClientsToMessage();
-                    Game.Playing = true;
+                    SetOnlinePlay();
                     break;
             }
     }
 
-    private void SetClientsToMessage()
+    private void SetOnlinePlay()
     {
+        Game.Helper.OnlineHelper();
         Game.Messages.SetClients(FirstClient,SecondClient);
-        Game.PlayingOnline = true;
+        Game.GameNotifications.Helper.OnlineHelper();
         Game.NewHand();
     }
     private void ThreadProc(object obj)

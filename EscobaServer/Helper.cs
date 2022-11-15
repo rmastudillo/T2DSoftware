@@ -4,11 +4,16 @@ namespace EscobaServer;
 public class Helper
 {
     public Messages Messages { get; }
-    public bool PlayingOnline = true;
+    public bool PlayingOnline { get; set; }
 
     public Helper(Messages messages)
     {
         Messages = messages;
+    }
+
+    public void OnlineHelper()
+    {
+        PlayingOnline = true;
     }
     public List<List<string>> ListOfPlaysToString(List<List<Card>> possiblePlays)
     {
@@ -56,22 +61,25 @@ public class Helper
     private int GetPlayerInputOnline(int maxInputValue)
     {
         var inputCodeString = new List<string>(){"Code:input"};
-        var inputIsInt = false;
-        var waitingNewMsg = true;
+        var inputIsValid = false;
         var clientMesage = "";
-        var playerValidInput = 1;
-        while (!inputIsInt)
+        while (!inputIsValid)
         {
             Messages.SendSpecificMessageToClient(inputCodeString,Messages.CurrentPlayerName);
-            while (waitingNewMsg)
-            {
-                clientMesage = Messages.GetClientMsg(Messages.Clients[Messages.CurrentPlayerName]);
-                waitingNewMsg = false;
-            }
-            inputIsInt = TryParse(clientMesage, out  playerValidInput);
+            clientMesage = Messages.GetClientMsg(Messages.Clients[Messages.CurrentPlayerName]);
+            Console.WriteLine(clientMesage);
+            inputIsValid = InputIsValid( clientMesage,  maxInputValue);
+            if (!inputIsValid){ Messages.InvalidInput();}
 
         }
+        TryParse(clientMesage, out  var playerValidInput);
         return playerValidInput;
+    }
+
+    private bool InputIsValid(string playerInput, int maxInputValue)
+    {
+        var inputIsInt = TryParse(playerInput, out var playerValidInput);
+        return inputIsInt && (playerValidInput >= 1) && (playerValidInput <= maxInputValue);
     }
     public int GetPlayerInput(int maxInputValue)
     {
@@ -80,12 +88,15 @@ public class Helper
             var playerValidInputOnline = GetPlayerInputOnline(maxInputValue);
             return playerValidInputOnline - 1;
         }
-        var inputIsInt = TryParse(Console.ReadLine(), out var playerValidInput);
-        while (!inputIsInt || (playerValidInput < 1) || (playerValidInput > maxInputValue))
+        var playerInput = Console.ReadLine();
+        var isValidInput = InputIsValid(playerInput,maxInputValue);;
+        while (!isValidInput)
         {
             Messages.InvalidInput();
-            inputIsInt = TryParse(Console.ReadLine(), out playerValidInput);
+            playerInput = Console.ReadLine();
+            isValidInput = InputIsValid(playerInput,maxInputValue);
         }
+        TryParse(playerInput, out  var playerValidInput);
         return playerValidInput - 1;
     }
 }

@@ -5,10 +5,12 @@ public class Messages
 {
     public Dictionary<string,Client> Clients = new();
     public string CurrentPlayerName = "Jugador 0";
+    public bool PlayingOnline = false;
     public void SetClients(Client firstClient,Client secondClient)
     {
         Clients.Add("Jugador 0",firstClient);
         Clients.Add("Jugador 1",secondClient);
+        PlayingOnline = true;
     }
 
     public void ChangeCurrentPlayer(string currentPlayerName)
@@ -29,6 +31,7 @@ public class Messages
     }
     public void SendMessage( StreamWriter writer,string message)
     {
+        if(Clients.Count==0) return;
         writer.Flush();
         writer.WriteLine(message);
         writer.Flush();
@@ -210,6 +213,11 @@ public class Messages
 
     public void InvalidInput()
     {
-        ListMessagePrinter(new []{"Error: Input inválido, porfavor selecciona una opción válida:\n"});
+        var errorMsg = new []{"Error: Input inválido, porfavor selecciona una opción válida:\n"};
+        ListMessagePrinter(errorMsg);
+        if (PlayingOnline)
+        {
+            SendSpecificMessageToClient(errorMsg, CurrentPlayerName);
+        }
     }
 }

@@ -6,7 +6,6 @@ public class EscobaGame
     public GameNotifications GameNotifications { get; }
     public Helper Helper { get; }
     public Player CurrentPlayer { get; set; }
-    public bool Playing = true;
     public Messages Messages = new Messages();
     public bool PlayingOnline = false;
     private Player _lastPlayerThatMakeAPlay = new Player(0);
