@@ -40,7 +40,6 @@ public class Client
                 _playing = false;
                 break;
             case "Code:correct":
-                Console.WriteLine("El mensaje fue recibido correctamente");
                 _writeMode = false;
                 break;
         }
@@ -49,12 +48,10 @@ public class Client
 
     private void SendMessage(string message)
     {
-  
-        Console.WriteLine($"Enviando{message}");
+        
         Writer.WriteLineAsync(message);
         Writer.Flush();
-        Console.WriteLine($"-{message}- Enviado");
-        //ShowServerMessages(Reader);
+        
     }
     public void StartConnection()
     {

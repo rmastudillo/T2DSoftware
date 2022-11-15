@@ -18,6 +18,20 @@ public class Messages
         CurrentPlayerName = currentPlayerName;
     }
 
+    private void WaitingTheOtherPlayer()
+    {
+        var waitingMessage = $"# Espera a que el {CurrentPlayerName} haga su jugada #\n";
+        switch (CurrentPlayerName)
+        {
+            case "Jugador 1" when PlayingOnline:
+                SendMessage(Clients["Jugador 0"].ClientWriter, waitingMessage);
+                break;
+            case "Jugador 0" when PlayingOnline:
+                SendMessage(Clients["Jugador 1"].ClientWriter, waitingMessage);
+                break;
+        }
+    }
+
     public string GetClientMsg(Client client)
     {
         Console.WriteLine($"Esperando el mensaje de {CurrentPlayerName}");
@@ -41,28 +55,24 @@ public class Messages
         var consolidateMessage = string.Join(spliter, listMessage);
         Console.Write(consolidateMessage);
     }
-
-    public void SendSpecificMessageToClient(IEnumerable<string> listMessage, string clientName, string spliter = "")
+public void SendSpecificMessageToClient(IEnumerable<string> listMessage, string clientName, string spliter = "")
     {
-        var waitingMessage = $"Espera a que el jugador {clientName} haga su jugada\n";
         var consolidateMessage = string.Join(spliter, listMessage);
         if (Clients.Count < 2) return;
         switch (clientName)
         {
             case "Jugador 0":
                 SendMessage(Clients["Jugador 0"].ClientWriter, consolidateMessage);
-                SendMessage(Clients["Jugador 1"].ClientWriter, waitingMessage);
                 break;
             case "Jugador 1":
-                SendMessage(Clients["Jugador 0"].ClientWriter, waitingMessage);
                 SendMessage(Clients["Jugador 1"].ClientWriter, consolidateMessage);
                 break;
             case "Ambos":
-            {
-                SendMessage(Clients["Jugador 0"].ClientWriter, consolidateMessage);
-                SendMessage(Clients["Jugador 1"].ClientWriter, consolidateMessage);
-                break;
-            }
+                {
+                    SendMessage(Clients["Jugador 0"].ClientWriter, consolidateMessage);
+                    SendMessage(Clients["Jugador 1"].ClientWriter, consolidateMessage);
+                    break;
+                }
         }
     }
     public void WelcomeMessage()
@@ -182,35 +192,46 @@ public class Messages
 
         return listCopy;
     }
-    public void MainTurn(string playerName, List<string> playerHand, List<string> currentBoard)
+    
+    private void ManageMessage(List<string> msg, String kind, string spliter = "")
+    {
+        ListMessagePrinter(msg, spliter);
+        SendSpecificMessageToClient(msg, kind, spliter);
+    }
+
+    private void ShowCurrentStateOfTheGame(string playerName, List<string> playerHand, List<string> currentBoard)
     {
         var mainMenuMessage = new List<string>(new[]
         {
             $"\n* Juega {playerName} *\n",
             "Mesa actual: "
         });
-        ListMessagePrinter(mainMenuMessage);
-        SendSpecificMessageToClient(mainMenuMessage, "Ambos");
-        var boardCopy = AddIndexToListString(currentBoard);
-        var listMessage = boardCopy.ToList();
-        ListMessagePrinter(listMessage, ", ");
-        SendSpecificMessageToClient(listMessage, "Ambos",", ");
-        var handTitleMessage = new List<string>(){"\nMano jugador: "};
-        ListMessagePrinter(handTitleMessage);
-        SendSpecificMessageToClient(handTitleMessage, playerName);
+        ManageMessage(mainMenuMessage, "Ambos");
+        var listMessage = AddIndexToListString(currentBoard).ToList();
+        ManageMessage(listMessage, "Ambos", ", ");
+        var handTitleMessage = new List<string>() { "\nMano jugador: " };
+        ManageMessage(handTitleMessage, playerName);
         var playerHandCopy = AddIndexToListString(playerHand);
         ListMessagePrinter(playerHandCopy, ", ");
-        var inputCardMessage = new List<string>(){"\n¿Qué carta quieres bajar?\n"};
-        ListMessagePrinter(inputCardMessage);
-        SendSpecificMessageToClient(inputCardMessage, playerName);
+    }
+
+    private void AskWhichCardsToPlay(string playerName, List<string> playerHand)
+    {
+        var inputCardMessage = new List<string>() { "\n¿Qué carta quieres bajar?\n" };
+        ManageMessage(inputCardMessage, playerName);
         var maxInputMessage = new List<string>(new[]
         {
             $"Ingresa un número entre 1 y {playerHand.Count}:\n"
         });
-        ListMessagePrinter(maxInputMessage);
-        SendSpecificMessageToClient(maxInputMessage, playerName);
+        ManageMessage(maxInputMessage, playerName);
     }
 
+    public void MainTurn(string playerName, List<string> playerHand, List<string> currentBoard)
+    {
+        ShowCurrentStateOfTheGame(playerName, playerHand, currentBoard);
+        WaitingTheOtherPlayer();
+        AskWhichCardsToPlay(playerName, playerHand);
+    }
     public void InvalidInput()
     {
         var errorMsg = new []{"Error: Input inválido, porfavor selecciona una opción válida:\n"};

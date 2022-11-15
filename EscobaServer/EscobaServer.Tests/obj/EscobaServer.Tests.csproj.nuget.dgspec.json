@@ -1,0 +1,146 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaServer\\EscobaServer.Tests\\EscobaServer.Tests.csproj": {}
+  },
+  "projects": {
+    "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaServer\\EscobaServer.Tests\\EscobaServer.Tests.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaServer\\EscobaServer.Tests\\EscobaServer.Tests.csproj",
+        "projectName": "EscobaServer.Tests",
+        "projectPath": "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaServer\\EscobaServer.Tests\\EscobaServer.Tests.csproj",
+        "packagesPath": "C:\\Users\\kaybbe\\.nuget\\packages\\",
+        "outputPath": "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaServer\\EscobaServer.Tests\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\kaybbe\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaServer\\EscobaServer.csproj": {
+                "projectPath": "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaServer\\EscobaServer.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.1.0, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.2, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.4.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaServer\\EscobaServer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaServer\\EscobaServer.csproj",
+        "projectName": "EscobaServer",
+        "projectPath": "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaServer\\EscobaServer.csproj",
+        "packagesPath": "C:\\Users\\kaybbe\\.nuget\\packages\\",
+        "outputPath": "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaServer\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\kaybbe\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "xunit.extensibility.core": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

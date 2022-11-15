@@ -2,10 +2,10 @@ using static System.Int32;
 namespace EscobaServer;
 public class EscobaGame
 {
-    public Board Board { get; set; }
+    private Board Board { get; set; }
     public GameNotifications GameNotifications { get; }
     public Helper Helper { get; }
-    public Player CurrentPlayer { get; set; }
+    private Player CurrentPlayer { get; set; }
     public Messages Messages = new Messages();
     public bool PlayingOnline = false;
     private Player _lastPlayerThatMakeAPlay = new Player(0);

@@ -13,3 +13,6 @@ D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\Es
 D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\EscobaServer.pdb
 D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\EscobaServer.genruntimeconfig.cache
 D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\ref\EscobaServer.dll
+D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\bin\Debug\net6.0\xunit.abstractions.dll
+D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\bin\Debug\net6.0\xunit.core.dll
+D:\Cosas de la u\Semestre actual\Diseño detallado de software\T2\T2DSoftware\EscobaServer\obj\Debug\net6.0\EscobaServer.csproj.CopyComplete
