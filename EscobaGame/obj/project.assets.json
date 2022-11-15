@@ -8,19 +8,19 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\kaybbe\\.nuget\\packages\\": {}
+    "/Users/felipelois/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaGame\\Escoba.csproj",
+      "projectUniqueName": "/Users/felipelois/Desktop/T2DSoftware/EscobaGame/Escoba.csproj",
       "projectName": "Escoba",
-      "projectPath": "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaGame\\Escoba.csproj",
-      "packagesPath": "C:\\Users\\kaybbe\\.nuget\\packages\\",
-      "outputPath": "D:\\Cosas de la u\\Semestre actual\\Diseño detallado de software\\T2\\T2DSoftware\\EscobaGame\\obj\\",
+      "projectPath": "/Users/felipelois/Desktop/T2DSoftware/EscobaGame/Escoba.csproj",
+      "packagesPath": "/Users/felipelois/.nuget/packages/",
+      "outputPath": "/Users/felipelois/Desktop/T2DSoftware/EscobaGame/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\kaybbe\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/felipelois/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -59,7 +59,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -3,12 +3,12 @@ using System.Diagnostics;
 namespace EscobaServer;
 public class Messages
 {
-    public Dictionary<string,Client> Clients = new();
+    public Dictionary<string, Client> Clients = new();
     public string CurrentPlayerName = "Jugador 0";
-    public void SetClients(Client firstClient,Client secondClient)
+    public void SetClients(Client firstClient, Client secondClient)
     {
-        Clients.Add("Jugador 0",firstClient);
-        Clients.Add("Jugador 1",secondClient);
+        Clients.Add("Jugador 0", firstClient);
+        Clients.Add("Jugador 1", secondClient);
     }
 
     public void ChangeCurrentPlayer(string currentPlayerName)
@@ -23,17 +23,17 @@ public class Messages
         while (string.IsNullOrEmpty(response))
         {
             response = client.ClientReader.ReadLine();
-            SendMessage(client.ClientWriter,"Code:correct");
+            SendMessage(client.ClientWriter, "Code:correct");
         }
         return response;
     }
-    public void SendMessage( StreamWriter writer,string message)
+    public void SendMessage(StreamWriter writer, string message)
     {
         writer.Flush();
         writer.WriteLine(message);
         writer.Flush();
     }
-    private  void ListMessagePrinter(IEnumerable<string> listMessage, string spliter="")
+    private void ListMessagePrinter(IEnumerable<string> listMessage, string spliter = "")
     {
         var consolidateMessage = string.Join(spliter, listMessage);
         Console.Write(consolidateMessage);
@@ -55,11 +55,11 @@ public class Messages
                 SendMessage(Clients["Jugador 1"].ClientWriter, consolidateMessage);
                 break;
             case "Ambos":
-            {
-                SendMessage(Clients["Jugador 0"].ClientWriter, consolidateMessage);
-                SendMessage(Clients["Jugador 1"].ClientWriter, consolidateMessage);
-                break;
-            }
+                {
+                    SendMessage(Clients["Jugador 0"].ClientWriter, consolidateMessage);
+                    SendMessage(Clients["Jugador 1"].ClientWriter, consolidateMessage);
+                    break;
+                }
         }
     }
     public void WelcomeMessage()
@@ -90,7 +90,7 @@ public class Messages
         ListMessagePrinter(mainMenuMessage);
         InputMessage(2);
     }
-    
+
 
     public void DealingCards(string player)
     {
@@ -114,7 +114,7 @@ public class Messages
 
     public void EndTurnReport(List<string> cardsWonPlayer1, List<string> cardsWonPlayer2, List<int> points)
     {
-        
+
         var cards1 = string.Join(", ", cardsWonPlayer1);
         var cards2 = string.Join(", ", cardsWonPlayer2);
         var message = new List<string>(new[]
@@ -133,9 +133,9 @@ public class Messages
         SendSpecificMessageToClient(message, "Ambos");
     }
 
-    private void AddOptionToPlay(int numerOfOption,List<string> play)
+    private void AddOptionToPlay(int numerOfOption, List<string> play)
     {
-        play[0] = $"({numerOfOption+1}) " + play[0];
+        play[0] = $"({numerOfOption + 1}) " + play[0];
         play[^1] += "\n";
     }
     public void ShowPlays(List<List<string>> listOfPlays)
@@ -143,8 +143,8 @@ public class Messages
 
         for (var numberOfPlay = 0; numberOfPlay < listOfPlays.Count; numberOfPlay++)
         {
-            AddOptionToPlay(numberOfPlay,listOfPlays[numberOfPlay]);
-            ListMessagePrinter(listOfPlays[numberOfPlay],", ");
+            AddOptionToPlay(numberOfPlay, listOfPlays[numberOfPlay]);
+            ListMessagePrinter(listOfPlays[numberOfPlay], ", ");
         }
         Console.WriteLine("¿Que jugada desea usar?");
         InputMessage(listOfPlays.Count);
@@ -179,37 +179,48 @@ public class Messages
 
         return listCopy;
     }
-    public void MainTurn(string playerName, List<string> playerHand, List<string> currentBoard)
+
+    private void ManageMessage(List<string> msg, String kind, string spliter = "")
+    {
+        ListMessagePrinter(msg, spliter);
+        SendSpecificMessageToClient(msg, kind, spliter);
+    }
+
+    private void ShowCurrentStateOfTheGame(string playerName, List<string> playerHand, List<string> currentBoard)
     {
         var mainMenuMessage = new List<string>(new[]
         {
             $"\n* Juega {playerName} *\n",
             "Mesa actual: "
         });
-        ListMessagePrinter(mainMenuMessage);
-        SendSpecificMessageToClient(mainMenuMessage, "Ambos");
-        var boardCopy = AddIndexToListString(currentBoard);
-        var listMessage = boardCopy.ToList();
-        ListMessagePrinter(listMessage, ", ");
-        SendSpecificMessageToClient(listMessage, "Ambos",", ");
-        var handTitleMessage = new List<string>(){"\nMano jugador: "};
-        ListMessagePrinter(handTitleMessage);
-        SendSpecificMessageToClient(handTitleMessage, playerName);
+        ManageMessage(mainMenuMessage, "Ambos");
+        var listMessage = AddIndexToListString(currentBoard).ToList();
+        ManageMessage(listMessage, "Ambos", ", ");
+        var handTitleMessage = new List<string>() { "\nMano jugador: " };
+        ManageMessage(handTitleMessage, playerName);
         var playerHandCopy = AddIndexToListString(playerHand);
         ListMessagePrinter(playerHandCopy, ", ");
-        var inputCardMessage = new List<string>(){"\n¿Qué carta quieres bajar?\n"};
-        ListMessagePrinter(inputCardMessage);
-        SendSpecificMessageToClient(inputCardMessage, playerName);
+    }
+
+    private void AskWhichCardsToPlay(string playerName, List<string> playerHand)
+    {
+        var inputCardMessage = new List<string>() { "\n¿Qué carta quieres bajar?\n" };
+        ManageMessage(inputCardMessage, playerName);
         var maxInputMessage = new List<string>(new[]
         {
             $"Ingresa un número entre 1 y {playerHand.Count}:\n"
         });
-        ListMessagePrinter(maxInputMessage);
-        SendSpecificMessageToClient(maxInputMessage, playerName);
+        ManageMessage(maxInputMessage, playerName);
+    }
+
+    public void MainTurn(string playerName, List<string> playerHand, List<string> currentBoard)
+    {
+        ShowCurrentStateOfTheGame(playerName, playerHand, currentBoard);
+        AskWhichCardsToPlay(playerName, playerHand);
     }
 
     public void InvalidInput()
     {
-        ListMessagePrinter(new []{"Error: Input inválido, porfavor selecciona una opción válida:\n"});
+        ListMessagePrinter(new[] { "Error: Input inválido, porfavor selecciona una opción válida:\n" });
     }
 }
