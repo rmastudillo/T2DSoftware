@@ -157,9 +157,11 @@ public void SendSpecificMessageToClient(IEnumerable<string> listMessage, string 
         for (var numberOfPlay = 0; numberOfPlay < listOfPlays.Count; numberOfPlay++)
         {
             AddOptionToPlay(numberOfPlay,listOfPlays[numberOfPlay]);
-            ListMessagePrinter(listOfPlays[numberOfPlay],", ");
+            ManageMessage(listOfPlays[numberOfPlay],CurrentPlayerName,", ");
         }
-        Console.WriteLine("¿Que jugada desea usar?");
+
+        var askForAPlay = new List<string>() { "¿Que jugada desea usar?" };
+        ManageMessage(askForAPlay,CurrentPlayerName,", ");
         InputMessage(listOfPlays.Count);
     }
     public void CardWon(string playername, List<string> cardsWon)
@@ -212,7 +214,7 @@ public void SendSpecificMessageToClient(IEnumerable<string> listMessage, string 
         var handTitleMessage = new List<string>() { "\nMano jugador: " };
         ManageMessage(handTitleMessage, playerName);
         var playerHandCopy = AddIndexToListString(playerHand);
-        ListMessagePrinter(playerHandCopy, ", ");
+        ManageMessage(playerHandCopy.ToList(), playerName,", ");
     }
 
     private void AskWhichCardsToPlay(string playerName, List<string> playerHand)
@@ -234,11 +236,8 @@ public void SendSpecificMessageToClient(IEnumerable<string> listMessage, string 
     }
     public void InvalidInput()
     {
-        var errorMsg = new []{"Error: Input inválido, porfavor selecciona una opción válida:\n"};
-        ListMessagePrinter(errorMsg);
-        if (PlayingOnline)
-        {
-            SendSpecificMessageToClient(errorMsg, CurrentPlayerName);
-        }
+        var errorMsg = new List<string>(){"Error: Input inválido, porfavor selecciona una opción válida:\n"};
+        ManageMessage(errorMsg,CurrentPlayerName);
+  
     }
 }
